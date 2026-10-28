@@ -1,0 +1,10 @@
+{
+  "name": "inglese",
+  "version": "0.1.0",
+  "description": "Metodo in tre ruoli per testi in inglese americano corretti e gradevoli da leggere: lo scrittore (prima stesura e levigatura), il verificatore (dati e fonti, facoltativo) e lo stilista (prosa scorrevole, senza fronzoli e senza togliere informazione). Istruzioni e rapporti in italiano, testi in inglese.",
+  "author": {
+    "name": "cms"
+  },
+  "keywords": ["inglese", "english", "american-english", "scrittura", "stile", "revisione", "fonti", "prosa"],
+  "license": "MIT"
+}

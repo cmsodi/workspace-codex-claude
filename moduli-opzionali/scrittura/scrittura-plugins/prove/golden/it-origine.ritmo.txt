@@ -1,0 +1,11 @@
+(registro: regolare; soglia frasi brevi 15%)
+
+== it-origine.md
+   3 paragrafi, 10 frasi, 136 parole
+   media 13.6  mediana 14  dev.std 5.5  min 3  max 22
+   fino a 8: 20%   9-20: 70%   21-35: 10%   oltre 35: 0%
+   frasi per paragrafo 3.3   parole per paragrafo 45
+   una frase breve (fino a 8) ogni 68 parole
+   AVVISO mediana 14 fuori dall'intervallo indicativo 18-32
+   AVVISO deviazione standard 5.5: ritmo piatto
+   AVVISO frasi brevi al 20%: sono cerniere o effetto?

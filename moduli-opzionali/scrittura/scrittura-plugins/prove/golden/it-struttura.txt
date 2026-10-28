@@ -1,0 +1,4 @@
+Origine:   it-origine.md
+Risultato: it-rivisto.md
+
+Titoli, richiami, link, commenti, etichette, elenchi e sezione Note coincidono con l'origine.

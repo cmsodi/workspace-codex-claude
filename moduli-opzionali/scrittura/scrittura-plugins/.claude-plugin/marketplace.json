@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "scrittura-local",
+  "description": "Marketplace locale del metodo in tre ruoli (scrittore, verificatore, stilista) per testi italiani e per testi in inglese americano.",
+  "owner": {
+    "name": "cms"
+  },
+  "plugins": [
+    {
+      "name": "italiano",
+      "source": "./italiano",
+      "description": "Scrittore, verificatore e stilista: tre skill consecutive per testi italiani corretti, documentati e scorrevoli.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": ["italiano", "scrittura", "stile", "revisione", "fonti"]
+    },
+    {
+      "name": "inglese",
+      "source": "./inglese",
+      "description": "Scrittore, verificatore e stilista per testi in inglese americano, più il confronto fra le versioni italiana e inglese di un documento. Istruzioni e rapporti in italiano.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": ["inglese", "english", "american-english", "scrittura", "stile", "revisione", "fonti"]
+    }
+  ]
+}

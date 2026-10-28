@@ -1,0 +1,10 @@
+{
+  "name": "italiano",
+  "version": "0.1.0",
+  "description": "Metodo in tre ruoli per testi italiani corretti e gradevoli da leggere: lo scrittore (prima stesura e levigatura), il verificatore (dati e fonti, facoltativo) e lo stilista (prosa scorrevole, senza fronzoli e senza togliere informazione).",
+  "author": {
+    "name": "cms"
+  },
+  "keywords": ["italiano", "scrittura", "stile", "revisione", "fonti", "prosa"],
+  "license": "MIT"
+}

@@ -1,0 +1,15 @@
+Origine:   it-origine.md
+Risultato: it-rivisto.md
+
+AVVISO cautela forse persa, «ipotesi / ipotizzare»: 1 nell'origine, 0 nel risultato
+
+AVVISO possibili omissioni: 2 frasi dell'origine con meno del 70% delle parole significative nel risultato
+   p02 mancano: impor, infat, inolt, sotto, tutta
+        Inoltre, tuttavia, infatti, è importante sottolineare che nessuno andò a vedere per anni.
+   p03 mancano: avven, ipoti, meteo
+        La causa non è un meteorite, è un'esplosione in aria, e ipotizzano che sia avvenuta a un'altezza fra cinque e dieci chilometri.
+   Una frase spezzata o riformulata può comparire qui: si controlla che niente di ciò che diceva sia andato perso.
+
+Parole: origine 140, risultato 124 (-11%)
+Limiti: i numeri scritti in lettere e i nomi a inizio frase non sono visti.
+Numeri e nomi coincidono.
