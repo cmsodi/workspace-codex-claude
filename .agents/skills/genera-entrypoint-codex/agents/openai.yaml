@@ -1,0 +1,4 @@
+interface:
+  display_name: "Genera entrypoint Codex"
+  short_description: "Genera gli entrypoint locali delle skill Codex"
+  default_prompt: "Usa $genera-entrypoint-codex per creare o aggiornare gli entrypoint Codex dalle skill canoniche in .claude/skills."

@@ -23,7 +23,10 @@ della conversazione non li sostituisce.
 - `legacy/`: materiali superati conservati per memoria, recupero o confronto;
   non sono fonti operative correnti.
 - `test/`: prove, fixture e risultati temporanei di verifica.
-- `.agents/skills/`: skill locali condivise da Codex e Claude Code.
+- `.claude/skills/`: fonte canonica delle skill locali condivise.
+- `.agents/skills/genera-entrypoint-codex/`: skill permanente che genera
+  localmente gli entrypoint necessari alla scoperta delle skill da parte di
+  Codex.
 - `moduli-opzionali/`: componenti disponibili ma inattivi finché non vengono
   installati nella struttura operativa.
 
@@ -74,7 +77,7 @@ conversazione va preparato soltanto quando esiste una fase successiva definita.
 ## Commit, push e chiusura
 
 Le richieste di commit, push, pubblicazione, chiusura o passaggio di fase
-attivano la skill `.agents/skills/chiudi-fase/SKILL.md`.
+attivano la skill `.claude/skills/chiudi-fase/SKILL.md`.
 
 Prima di un commit:
 
@@ -97,10 +100,17 @@ spostamenti recuperabili in `legacy/` e verifica sempre il bersaglio.
 
 ## Compatibilità fra ambienti
 
-- `.agents/` è la directory fisica canonica.
-- `.claude` deve restare un collegamento simbolico a `.agents`.
-- Codex usa i percorsi `.agents/...`.
-- Claude Code può vedere gli stessi file sotto `.claude/...`.
+- `.claude/skills/` è la fonte fisica e canonica di tutte le skill
+  condivise, anche quando vengono create o modificate da Codex.
+- `.agents/` è una directory reale e non contiene collegamenti simbolici.
+- La sola skill permanente sotto `.agents/skills/` è
+  `genera-entrypoint-codex`; gli altri entrypoint sono generati localmente,
+  ignorati da Git e non vanno modificati a mano.
+- Dopo ogni aggiunta, rinomina o rimozione di una skill canonica, oppure dopo
+  una modifica ai campi `name` o `description`, rigenera gli entrypoint e
+  apri una nuova sessione Codex.
+- I percorsi operativi nei file condivisi usano sempre la forma canonica
+  `.claude/...`.
 - Le regole condivise appartengono a questo file; `AGENTS.md` e `CLAUDE.md`
   devono restare brevi e specifici dell'ambiente.
 

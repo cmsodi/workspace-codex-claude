@@ -5,8 +5,8 @@ description: Verifica con fonti consultate i fatti di un testo in inglese americ
 
 # Verificatore inglese
 
-1. Dalla radice del progetto, leggi per intero `.agents/scrittura-plugins/COMPATIBILITY.md`.
-2. Leggi per intero `.agents/scrittura-plugins/inglese/skills/verificatore/SKILL.md` e seguine il metodo.
-3. Leggi `.agents/scrittura-plugins/inglese/riferimenti/contratto.md` e `convenzioni-us.md` nella stessa cartella.
-4. Usa gli strumenti in `.agents/scrittura-plugins/inglese/strumenti/`, passando sempre `--lingua en` a `controlla.py`.
+1. Dalla radice del progetto, leggi per intero `.claude/scrittura-plugins/COMPATIBILITY.md`.
+2. Leggi per intero `.claude/scrittura-plugins/inglese/skills/verificatore/SKILL.md` e seguine il metodo.
+3. Leggi `.claude/scrittura-plugins/inglese/riferimenti/contratto.md` e `convenzioni-us.md` nella stessa cartella.
+4. Usa gli strumenti in `.claude/scrittura-plugins/inglese/strumenti/`, passando sempre `--lingua en` a `controlla.py`.
 5. La ricerca richiede accesso al web: preferisci fonti primarie, apri le pagine e cita soltanto URL realmente consultati.

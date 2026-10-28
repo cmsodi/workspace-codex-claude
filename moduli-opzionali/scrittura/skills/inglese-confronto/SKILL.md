@@ -5,8 +5,8 @@ description: Confronta le versioni italiana e inglese dello stesso documento per
 
 # Confronto bilingue
 
-1. Dalla radice del progetto, leggi per intero `.agents/scrittura-plugins/COMPATIBILITY.md`.
-2. Leggi per intero `.agents/scrittura-plugins/inglese/skills/confronto/SKILL.md` e seguine il metodo.
-3. Leggi `.agents/scrittura-plugins/inglese/riferimenti/contratto.md` e, quando richiesto, `diagnosi.md` nella stessa cartella.
-4. Usa `verifica_allineamento.py` e `controlla.py confronta` da `.agents/scrittura-plugins/inglese/strumenti/`.
+1. Dalla radice del progetto, leggi per intero `.claude/scrittura-plugins/COMPATIBILITY.md`.
+2. Leggi per intero `.claude/scrittura-plugins/inglese/skills/confronto/SKILL.md` e seguine il metodo.
+3. Leggi `.claude/scrittura-plugins/inglese/riferimenti/contratto.md` e, quando richiesto, `diagnosi.md` nella stessa cartella.
+4. Usa `verifica_allineamento.py` e `controlla.py confronta` da `.claude/scrittura-plugins/inglese/strumenti/`.
 5. Non correggere automaticamente le divergenze sostanziali: registrale e chiedi all'utente quale versione faccia fede quando il materiale non lo stabilisce.

@@ -5,8 +5,8 @@ description: Verifica con fonti consultate i fatti di un testo italiano, aggiorn
 
 # Verificatore italiano
 
-1. Dalla radice del progetto, leggi per intero `.agents/scrittura-plugins/COMPATIBILITY.md`.
-2. Leggi per intero `.agents/scrittura-plugins/italiano/skills/verificatore/SKILL.md` e seguine il metodo.
-3. Prima di lavorare, leggi `.agents/scrittura-plugins/italiano/riferimenti/contratto.md`.
-4. Usa gli strumenti in `.agents/scrittura-plugins/italiano/strumenti/`.
+1. Dalla radice del progetto, leggi per intero `.claude/scrittura-plugins/COMPATIBILITY.md`.
+2. Leggi per intero `.claude/scrittura-plugins/italiano/skills/verificatore/SKILL.md` e seguine il metodo.
+3. Prima di lavorare, leggi `.claude/scrittura-plugins/italiano/riferimenti/contratto.md`.
+4. Usa gli strumenti in `.claude/scrittura-plugins/italiano/strumenti/`.
 5. La ricerca richiede accesso al web: preferisci fonti primarie, apri le pagine e cita soltanto URL realmente consultati.

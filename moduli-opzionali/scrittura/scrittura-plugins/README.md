@@ -12,7 +12,7 @@ Il dettaglio di ciascun plugin è nel suo `README.md`.
 Dalla radice di questo progetto:
 
 ```bash
-claude plugin marketplace add .agents/scrittura-plugins
+claude plugin marketplace add .claude/scrittura-plugins
 ```
 
 ```bash

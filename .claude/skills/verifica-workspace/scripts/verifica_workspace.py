@@ -3,7 +3,8 @@
 
 from __future__ import annotations
 
-import os
+import subprocess
+import sys
 from pathlib import Path
 
 
@@ -12,16 +13,27 @@ CORE_FILES = (
     "AGENTS.md",
     "CLAUDE.md",
     "PROJECT_GUIDE.md",
+    ".claude/README.md",
+    ".claude/skills/chiudi-fase/SKILL.md",
+    ".claude/skills/verifica-workspace/SKILL.md",
     ".agents/README.md",
-    ".agents/skills/chiudi-fase/SKILL.md",
-    ".agents/skills/verifica-workspace/SKILL.md",
+    ".agents/skills/genera-entrypoint-codex/SKILL.md",
+    ".agents/skills/genera-entrypoint-codex/scripts/genera_entrypoint.py",
     "input/README.md",
     "lavorazione/README.md",
     "output/README.md",
     "legacy/README.md",
     "test/README.md",
 )
-CORE_DIRECTORIES = ("input", "lavorazione", "output", "legacy", "test")
+CORE_DIRECTORIES = (
+    ".claude/skills",
+    ".agents/skills",
+    "input",
+    "lavorazione",
+    "output",
+    "legacy",
+    "test",
+)
 WRITING_SKILLS = (
     "italiano-scrittore",
     "italiano-verificatore",
@@ -46,15 +58,44 @@ def main() -> int:
         if not (ROOT / relative).is_dir():
             problems.append(f"directory essenziale mancante: {relative}/")
 
-    link = ROOT / ".claude"
-    if not link.is_symlink():
-        problems.append(".claude non è un collegamento simbolico")
-    elif os.readlink(link) != ".agents":
-        problems.append(
-            f".claude punta a {os.readlink(link)!r}, non al percorso relativo '.agents'"
-        )
+    agents = ROOT / ".agents"
+    if agents.is_symlink():
+        problems.append(".agents deve essere una directory reale, non un symlink")
+    elif not agents.is_dir():
+        problems.append(".agents non è una directory")
     else:
-        notes.append("collegamento .claude -> .agents valido")
+        notes.append("directory .agents reale e separata dalla fonte canonica")
+
+    generator = (
+        ROOT
+        / ".agents"
+        / "skills"
+        / "genera-entrypoint-codex"
+        / "scripts"
+        / "genera_entrypoint.py"
+    )
+    if generator.is_file():
+        result = subprocess.run(
+            [sys.executable, str(generator), "--check"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode:
+            output = (result.stdout or result.stderr).strip().splitlines()
+            details = [
+                line.removeprefix("- ").strip()
+                for line in output
+                if line.startswith("- ")
+            ]
+            detail = "; ".join(details) or "esegui il generatore"
+            warnings.append(
+                "entrypoint Codex non allineati; se usi Codex esegui "
+                f"genera-entrypoint-codex: {detail}"
+            )
+        else:
+            notes.append(result.stdout.strip())
 
     guide = ROOT / "PROJECT_GUIDE.md"
     if guide.is_file():
@@ -79,12 +120,12 @@ def main() -> int:
     else:
         notes.append("modulo di scrittura non incluso, condizione ammessa")
 
-    active_plugins = ROOT / ".agents" / "scrittura-plugins"
+    active_plugins = ROOT / ".claude" / "scrittura-plugins"
     if active_plugins.exists():
         missing_skills = [
             name
             for name in WRITING_SKILLS
-            if not (ROOT / ".agents" / "skills" / name / "SKILL.md").is_file()
+            if not (ROOT / ".claude" / "skills" / name / "SKILL.md").is_file()
         ]
         if missing_skills:
             problems.append(
