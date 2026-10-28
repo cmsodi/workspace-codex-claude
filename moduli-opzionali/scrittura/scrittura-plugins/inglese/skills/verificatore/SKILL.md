@@ -24,7 +24,7 @@ Per più di una decina di affermazioni, o per ricerche ampie che riempirebbero i
 
 ## Procedura
 
-1. **Scegli che cosa verificare.** Parti dalle affermazioni che reggono il testo: numeri, date, nomi, attribuzioni, rapporti di causa e le conclusioni. Le ovvietà non servono. Annota il piano in due righe.
+1. **Scegli che cosa verificare.** Parti dalle affermazioni che reggono il testo: numeri, date, nomi, attribuzioni, rapporti di causa e le conclusioni. Le ovvietà non servono. Annota il piano in due righe. Le **attribuzioni vaghe** (*experts say*, *studies show*, *widely regarded*, *observers note*, *industry reports*) sono affermazioni da verificare come le altre: cerca chi lo dice davvero. Se lo trovi, nel testo scrivi nome, ruolo e anno e registra la fonte; se non lo trovi, l'esito è «non verificabile» e proponi nelle note di presentarla come tesi dell'autore o di toglierla. Le cautele con cui la fonte originale si protegge (*is thought to be*, *according to*) non sono attribuzioni vaghe e si conservano.
 2. **Cerca preferendo le fonti primarie:** documenti ufficiali, articoli scientifici, comunicati originali, testi di legge, archivi. Poi le secondarie di qualità. Per ogni punto importante cerca una seconda fonte indipendente. Cerca nella lingua della fonte originale (per un fatto italiano, anche in italiano), non solo in inglese: l'inglese spesso riporta di seconda mano.
 3. **Apri le pagine.** Una pagina vista solo nei risultati di ricerca non vale come letta: registrala come tale.
 4. **Assegna un esito a ogni affermazione verificata:** confermata, smentita, datata (era vera, ora non lo è), in conflitto (le fonti non concordano), non verificabile.

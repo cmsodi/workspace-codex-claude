@@ -56,7 +56,8 @@ Per i testi lunghi lo stilista lavora a pezzi con l'agente `inglese:stilista`, c
 - `agents/`: `verificatore` (ricerca in rete, contesto isolato) e `stilista` (lavoro a pezzi sui documenti lunghi).
 - `riferimenti/contratto.md`: file di scambio, registro delle affermazioni, regole sui fatti, note e fonti, traduzione dall'italiano.
 - `riferimenti/convenzioni-us.md`: ortografia, punteggiatura, numeri, date e titoli in americano.
-- `riferimenti/diagnosi.md`: modello di buona prosa, ritmo (provvisorio), tic degli LLM e degli autori umani, calchi dall'italiano, passivi, intoppi di lettura.
+- `riferimenti/diagnosi.md`: modello di buona prosa, ritmo (provvisorio), tic degli LLM e degli autori umani (con le famiglie del repertorio dei segni di scrittura automatica), calchi dall'italiano, passivi, intoppi di lettura e, alla sezione 11, ciò che non è un segno.
+- `riferimenti/NOTE-LEGALI.md`: origine dei materiali e licenze.
 - `strumenti/controlla.py`: controlli di integrità (con ricerca di omissioni), struttura, ritmo, tic e scorrevolezza. Solo libreria standard di Python. Si usa sempre con `--lingua en`. È la stessa identica copia del plugin `italiano` (un'unica fonte con due profili di lingua).
 - `strumenti/verifica_integrita.py`: controllo riga per riga dei pezzi (dal plugin `revisione`).
 - `strumenti/verifica_allineamento.py`: controllo che due file (italiano e inglese) abbiano la stessa struttura (dal plugin `revisione`).

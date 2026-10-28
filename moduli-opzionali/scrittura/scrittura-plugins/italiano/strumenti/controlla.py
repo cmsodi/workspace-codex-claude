@@ -176,7 +176,8 @@ TIC_EN = [
     ("lessico da LLM", r"\bdelv\w+|\btapestry\b|\bpivotal\b|\bunderscor\w+|\bintricate\b|\bmultifaceted\b|\bnuanced\b|\bseamless\w*|\bholistic\w*|\bvibrant\b|\bbustling\b"
                        r"|\brealm\b|\blandscape\b|\bjourney\b|\bnavigat\w+|\bleverag\w+|\bharness\w*|\bfoster\w*|\bunlock\w*|\bempower\w*|\belevat\w+|\bshowcas\w+"
                        r"|\bshed(?:s|ding)? light\b|\bgame-chang\w+|\bcutting-edge\b|\btransformative\b|\bgroundbreaking\b|\bbeacon\b|\bembark\w*|\btreasure trove\b"
-                       r"|\bever-(?:evolving|changing)\b|\bfast-paced\b|\bmeticulous\w*|\bcommendable\b|\brobust\b|\bparadigm\b"),
+                       r"|\bever-(?:evolving|changing)\b|\bfast-paced\b|\bmeticulous\w*|\bcommendable\b|\brobust\b|\bparadigm\b"
+                       r"|\bgarner\w*|\binterplay\b|\bbolster\w*|\benhanc\w+|\bintricacies\b|\balign(?:s|ed|ing)? with\b|\bvaluable insights?\b|\bresonat\w+ with\b"),
     ("iperbole o giudizio generico", r"\b(?:crucial|vital|essential|remarkable|unprecedented|truly|genuinely|deeply|fundamentally|incredibly|extremely|absolutely|undeniabl\w+|undoubtedly)\b"),
     ("corporate-speak", r"\bsynerg\w+|\bcircle back\b|\btouch base\b|\bbandwidth\b|\bdeep[- ]dive\b|\blow[- ]hanging fruit\b|\bmove the needle\b|\bgoing forward\b|\bstakeholders?\b"
                         r"|\butili[sz]\w+|\blearnings\b|\btake-?aways?\b|\bparadigm shift\b|\bbest practices?\b|\bvalue[- ]add\w*|\becosystems?\b|\bmission-critical\b"
@@ -188,8 +189,49 @@ TIC_EN = [
                    r"|\btip of the iceberg\b|\bgrowing chorus\b|\bsources say\b|\braised eyebrows\b|\bhot-button\b|\bspearhead\w*|\bramp(?:ing|ed|s)? up\b"),
     ("participio o gerundio appeso, da valutare", r",\s+(?:highlighting|ensuring|reflecting|underscoring|showcasing|demonstrating|illustrating|emphasizing|signaling|marking|reinforcing|enabling|allowing|making|paving|solidifying)\b"),
     ("possibile calco dall'italiano (falso amico, reggenza, plurale)", CALCHI_IT_EN),
+    ("enfasi sul significato o sull'eredità", r"\breflects? (?:the )?broader\b|\bbroader (?:trends?|context|significance|implications)\b|\benduring (?:legacy|impact|significance)\b"
+                                              r"|\blasting (?:legacy|impact)\b|\bindelible mark\b|\bdeeply rooted\b|\bsetting the stage for\b|\bturning point\b"
+                                              r"|\bmarks? a (?:shift|new chapter)\b|\bmarking a (?:pivotal|significant|key|new)\b|\bevolving landscape\b|\bfocal point\b"
+                                              r"|\bhas generated debate\b|\bprompted broader\b|\bcontributing to the (?:broader|wider|ongoing)\b"
+                                              r"|\bstands? as a (?:reminder|symbol)\b|\bsymboli[sz]ing its\b"),
+    ("notorietà e copertura mediatica, da valutare", r"\bindependent coverage\b|\b(?:national|local|regional) media outlets?\b|\btrade publications?\b"
+                                                     r"|\b(?:featured|profiled|cited) in\b|\bactive social media presence\b|\bleading experts?\b"),
+    ("linguaggio da brochure", r"\bnestled\b|\bin the heart of\b|\bbreathtaking\b|\bstunning\b|\bworld-class\b|\bstate-of-the-art\b|\brenowned\b"
+                               r"|\bdiverse array\b|\brich (?:cultural )?(?:heritage|history)\b|\bnatural beauty\b|\bcommitment to (?:excellence|quality|sustainability)\b"
+                               r"|\bunparalleled\b|\bsecond to none\b|\bone-of-a-kind\b|\bhidden gem\b|\bmust-visit\b|\btop-notch\b"),
+    ("attribuzione vaga (nominare la fonte o togliere)", r"\b(?:experts|critics|observers|analysts|scholars|historians|commentators|researchers|many people|some people)"
+                                                         r" (?:say|argue|note|suggest|believe|agree|have (?:noted|cited|argued|suggested|pointed out))\b"
+                                                         r"|\bindustry (?:reports?|observers|experts|insiders)\b|\bstudies (?:show|suggest|indicate|have shown)\b"
+                                                         r"|\bresearch (?:shows|suggests|indicates)\b|\bwidely (?:regarded|considered|recognized|acclaimed)\b"
+                                                         r"|\bsome critics\b|\bseveral sources\b|\bobservers have\b|\bmany (?:experts|critics|scholars|historians)\b"),
+    ("formula delle sfide e delle prospettive", r"\bdespite (?:its|these|the|this)\b[^.?!]{0,80}\b(?:challenges|setbacks|obstacles|limitations|hurdles)\b"
+                                                r"|\bfaces (?:several|a number of|numerous|some|many|ongoing) (?:challenges|obstacles|hurdles)\b|\bcontinues to (?:thrive|inspire)\b"
+                                                r"|\bfuture (?:outlook|prospects)\b|\bbright future\b"),
+    ("definizione «X refers to» e perifrasi di is/has, da valutare", r"\brefers? to\b|\bis a (?:curated|comprehensive) (?:list|compilation|collection|overview)\b"
+                                                                    r"|\brepresents (?:a|an|the)\b|\boperates as\b|\bembodies\b|\bconstitutes\b"
+                                                                    r"|\b(?:features|offers) (?:a|an|the|over|more than|several|numerous) |\bbegan (?:his|her|their) career as\b|\bventured into\b"),
+    ("associazione vaga, da valutare (se la relazione è nota, nominarla)", r"\bassociated with\b|\bin connection with\b"),
+    ("avvertenza didattica", r"\bmay vary\b|\bkeep in mind\b|\bdepending on (?:various|several|many|a number of) factors\b|\bresults may differ\b"),
+    ("parola ricercata al posto di una semplice, da valutare", r"\bpassed away\b|\bauthored\b|\battempted\b|\brelocated\b|\bcommenc\w+|\bendeavou?r\w*|\bascertain\w*|\bfacilitat\w+"),
+    ("residuo della chat", r"\bi hope this helps\b|\bcertainly!|\bgreat question\b|\bof course!|\blet me know if\b|\bwould you like me to\b"
+                           r"|\bhere is (?:a|an|the) (?:revised|rewritten|updated|summary|overview)\b|\bin this section,? we(?: will|['’]ll)\b"
+                           r"|\bas an ai\b|\bas a language model\b|\bi['’]d be happy to\b|\bfeel free to\b"),
+    ("disclaimer sul sapere o congetture sulle lacune", r"\bas of my (?:last|latest|knowledge)\b|\bknowledge cut-?off\b|\bwhile specific details\b"
+                                                        r"|\bnot widely (?:documented|disclosed|available|reported|known)\b|\bbased on (?:the )?available information\b"
+                                                        r"|\bmaintains a low profile\b|\blimited information (?:is )?available\b|\bdetails are (?:limited|scarce)\b"),
+    ("segnaposto", r"\[(?:your|insert|add|describe|company|date|url|title|name)\b[^\]\n]{0,40}\](?!\()|\bINSERT_[A-Z_]+\b|\b\d{4}-XX-XX\b|\blorem ipsum\b"),
+    ("emoji come formattazione", "[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]"),
+    ("elenco con etichetta in grassetto (da valutare: se le etichette sono dati, restano)",
+     r"^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}\*\*:|^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}:\*\*"),
 ]
-CONNETTIVI_EN = r"\b(?:moreover|furthermore|additionally|in addition|however|therefore|thus|consequently|nevertheless|hence|indeed)\b"
+# Famiglie le cui segnalazioni, se vicine, sono la firma di un testo da LLM (vedi grappoli_en).
+GRAPPOLO_EN = {
+    "apertura o chiusura formulaica", "annuncio di rilevanza", "meta-annuncio", "perifrasi della copula", "lessico da LLM",
+    "iperbole o giudizio generico", "corporate-speak", "participio o gerundio appeso, da valutare",
+    "enfasi sul significato o sull'eredità", "linguaggio da brochure", "attribuzione vaga (nominare la fonte o togliere)",
+    "formula delle sfide e delle prospettive", "avvertenza didattica",
+}
+CONNETTIVI_EN =r"\b(?:moreover|furthermore|additionally|in addition|however|therefore|thus|consequently|nevertheless|hence|indeed)\b"
 
 # ---- scorrevolezza italiana
 
@@ -582,12 +624,28 @@ def cmd_ritmo(args):
 
 # ---------------------------------------------------------------------- tic
 
-def tic_aggiuntivi_en(righe):
-    """Controlli inglesi che non si riducono a un'espressione regolare per riga: em dash e virgola seriale."""
+def grappoli_en(righe):
+    """Capoversi con tre o più indizi delle famiglie tipiche dei LLM.
+
+    Un indizio isolato (una parola come «crucial») è normale; più indizi vicini sono la firma."""
     out = []
+    for i, p in enumerate(paragrafi(righe), 1):
+        k = sum(len(re.findall(rx, p, re.IGNORECASE)) for nome, rx in TIC_EN if nome in GRAPPOLO_EN)
+        if k >= 3:
+            out.append(f"grappolo: il capoverso {i} ha {k} indizi di famiglie tipiche dei LLM (un indizio isolato è normale, più indizi vicini sono una firma)")
+    return out
+
+
+def tic_aggiuntivi_en(righe):
+    """Controlli inglesi che non si riducono a un'espressione regolare per riga: grappoli, em dash, grassetto e virgola seriale."""
+    out = grappoli_en(righe)
     pars = [p for p in paragrafi(righe)]
     testo = testo_di(righe)
     parole = len(testo.split())
+    k_b = len(re.findall(r"\*\*[^*\n]+\*\*", testo))
+    if k_b >= 5 and 1000 * k_b / max(parole, 1) > 8:
+        out.append(f"grassetto: {k_b} passaggi in {parole} parole ({1000 * k_b / max(parole, 1):.1f} ogni mille). Nel corpo della prosa il grassetto non serve; "
+                   "le etichette a inizio paragrafo e i termini di un glossario sono legittimi.")
     k_em = testo.count("—")
     if k_em:
         densi = [i for i, p in enumerate(pars, 1) if p.count("—") > 2]

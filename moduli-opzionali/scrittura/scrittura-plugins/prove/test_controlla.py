@@ -278,6 +278,52 @@ class InglesTic(unittest.TestCase):
     def test_sull_italiano_non_scattano_le_regole_inglesi(self):
         _, out = esegui(IT, "tic", "en-llm.md")
         self.assertNotIn("lessico da LLM", out)
+        _, out = esegui(IT, "tic", "en-segni-catalogo.md")
+        for etichetta in ("grappolo", "attribuzione vaga", "segnaposto", "emoji"):
+            self.assertNotIn(etichetta, out, etichetta)
+
+    def test_segni_del_catalogo(self):
+        rc, out = esegui(EN, "--lingua", "en", "tic", "en-segni-catalogo.md")
+        self.assertEqual(rc, 0)
+        for etichetta in ("enfasi sul significato", "linguaggio da brochure", "attribuzione vaga", "formula delle sfide",
+                          "associazione vaga", "avvertenza didattica", "parola ricercata", "residuo della chat",
+                          "disclaimer sul sapere", "segnaposto", "emoji come formattazione", "elenco con etichetta in grassetto"):
+            self.assertIn(etichetta, out, etichetta)
+
+    def test_etichette_di_lavoro_e_link_non_sono_segnaposto(self):
+        _, out = esegui(EN, "--lingua", "en", "tic", "en-segni-catalogo.md")
+        segnaposto = [r for r in out.splitlines() if "[segnaposto]" in r]
+        self.assertEqual(len(segnaposto), 1, segnaposto)
+        self.assertIn("[Your Name]", segnaposto[0])
+        _, out = esegui(EN, "--lingua", "en", "tic", "en-non-segni.md")
+        self.assertNotIn("segnaposto", out)
+
+    def test_grappolo_solo_con_indizi_vicini(self):
+        _, out = esegui(EN, "--lingua", "en", "tic", "en-segni-catalogo.md")
+        self.assertIn("grappolo: il capoverso 1", out)
+        self.assertIn("grappolo: il capoverso 2", out)
+        _, out = esegui(EN, "--lingua", "en", "tic", "en-non-segni.md")
+        self.assertNotIn("grappolo", out)
+
+    def test_testo_formale_e_corretto_non_ha_segni_nuovi(self):
+        _, out = esegui(EN, "--lingua", "en", "tic", "en-non-segni.md")
+        for etichetta in ("enfasi sul significato", "brochure", "attribuzione vaga", "residuo della chat", "emoji",
+                          "avvertenza didattica", "disclaimer", "parola ricercata"):
+            self.assertNotIn(etichetta, out, etichetta)
+
+    def test_testo_pulito_senza_segni_nuovi(self):
+        _, out = esegui(EN, "--lingua", "en", "tic", "en-buono.md")
+        for etichetta in ("grappolo", "attribuzione vaga", "segnaposto", "residuo della chat", "emoji", "brochure"):
+            self.assertNotIn(etichetta, out, etichetta)
+
+    def test_grassetto_sparso_nel_corpo(self):
+        t = file_temporaneo("The plan has **three** parts. The **first** covers **cost**, the **second** covers **time**, "
+                            "and the **third** covers **risk**. Each part is short.\n")
+        try:
+            _, out = esegui(EN, "--lingua", "en", "tic", t)
+        finally:
+            os.unlink(t)
+        self.assertIn("[en] grassetto: 7 passaggi", out)
 
 
 class InglesRitmoEScorrevolezza(unittest.TestCase):
