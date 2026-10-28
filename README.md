@@ -35,8 +35,8 @@ strumenti senza mantenere copie divergenti.
 - `legacy/`: materiali superati conservati per recupero e confronto;
 - `test/`: prove, fixture e risultati temporanei di verifica.
 
-Le cinque cartelle sono mantenute in Git mediante un file nascosto
-`.gitkeep`. Il loro contenuto operativo è inizialmente vuoto.
+Ognuna delle cinque cartelle contiene un breve `README.md` che ne definisce
+funzione e confini. Il resto del contenuto operativo è inizialmente vuoto.
 
 ## Avvio di un nuovo progetto
 

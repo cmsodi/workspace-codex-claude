@@ -15,6 +15,11 @@ CORE_FILES = (
     ".agents/README.md",
     ".agents/skills/chiudi-fase/SKILL.md",
     ".agents/skills/verifica-workspace/SKILL.md",
+    "input/README.md",
+    "lavorazione/README.md",
+    "output/README.md",
+    "legacy/README.md",
+    "test/README.md",
 )
 CORE_DIRECTORIES = ("input", "lavorazione", "output", "legacy", "test")
 WRITING_SKILLS = (
