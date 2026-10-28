@@ -38,7 +38,7 @@ Per i testi lunghi lo stilista lavora a pezzi con l'agente `italiano:stilista`, 
 - `skills/`: le tre skill.
 - `agents/`: `verificatore` (ricerca in rete, contesto isolato) e `stilista` (lavoro a pezzi sui documenti lunghi).
 - `riferimenti/contratto.md`: file di scambio, registro delle affermazioni, regole sui fatti, note e fonti.
-- `riferimenti/diagnosi.md`: modello di buona prosa, ritmo, intoppi di lettura, tic degli LLM e degli autori umani, calchi dall'inglese, preferenze di stile dell'utente.
+- `riferimenti/diagnosi.md`: modello di buona prosa, ritmo, intoppi di lettura, tic degli LLM (con le famiglie del repertorio dei segni di scrittura automatica) e degli autori umani, calchi dall'inglese, preferenze di stile dell'utente e, alla sezione 11, ciò che non è un segno.
 - `riferimenti/grammatica-italiana.md`: guida di grammatica normativa (materiale di terzi, vedi `riferimenti/NOTE-LEGALI.md`).
 - `strumenti/controlla.py`: controlli di integrità (con ricerca di omissioni), struttura, ritmo, tic e scorrevolezza. Solo libreria standard di Python. Ha due profili di lingua (`--lingua it|en`); senza l'opzione vale `it`, e le skill di questo plugin lo usano così. È la stessa identica copia del plugin `inglese`.
 - `strumenti/verifica_integrita.py`: controllo riga per riga dei pezzi (dal plugin `revisione`).

@@ -41,4 +41,4 @@ La regola generale: **coerenza dentro il documento**. Dove il documento usa in m
 
 ## Controlli sul testo prodotto
 
-`controlla.py --lingua en tic` segnala ortografia britannica, date non americane, punto o virgola fuori dalle virgolette, caporali, trattini spaziati, em dash (con densità) e virgola seriale mancante. Sono indizi: i nomi propri britannici e le citazioni non si toccano.
+`controlla.py --lingua en tic` segnala ortografia britannica, date non americane, punto o virgola fuori dalle virgolette, caporali, trattini spaziati, em dash (con densità) e virgola seriale mancante. Controlla anche la coerenza dentro il documento: titoli dello stesso livello con convenzioni diverse (Title Case e prima maiuscola), apostrofi e virgolette doppie dritti mescolati ai ricurvi, *U.S.* e *US* insieme, *e.g.* e *i.e.* senza la virgola dopo, contrazioni e forme estese mescolate. Non controlla ancora l'uniformità di cifre e lettere nei numeri. Sono indizi: i nomi propri britannici e le citazioni non si toccano.

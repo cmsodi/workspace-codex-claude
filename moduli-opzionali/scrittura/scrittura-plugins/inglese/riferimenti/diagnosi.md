@@ -1,6 +1,6 @@
 # Diagnosi: il modello di buona prosa inglese e i suoi nemici
 
-Riferimento per la fase 3. Le sezioni 1-4 servono prima e durante la scrittura. La 5, la 6 e la 7 si consultano dopo la prima stesura, come controllo. È il gemello di `diagnosi.md` del plugin `italiano`, con la stessa numerazione fino alla 10: il modello e i principi sono gli stessi, cambiano i tic, i calchi e il trattamento dei passivi. La sezione 11, solo inglese, dice che cosa *non* è un segno.
+Riferimento per la fase 3. Le sezioni 1-4 servono prima e durante la scrittura. La 5, la 6 e la 7 si consultano dopo la prima stesura, come controllo. È il gemello di `diagnosi.md` del plugin `italiano`, con la stessa numerazione, compresa la sezione 11 sui non-segni: il modello e i principi sono gli stessi, cambiano i tic, i calchi e il trattamento dei passivi.
 
 **Stato della calibrazione.** Questo file nasce senza che sia stato analizzato nessun testo inglese di un autore reale. Il modello positivo è quello italiano, riletto per l'inglese; le soglie di ritmo (sezione 3) sono derivate da quelle italiane e dichiarate provvisorie; le liste di tic vengono dalla conoscenza dei testi da LLM, della prosa aziendale, accademica e giornalistica, dal file di stile `en-us.md` del plugin `revisione` e dal repertorio dei segni di scrittura automatica che la comunità di Wikipedia ha raccolto (vedi `NOTE-LEGALI.md`: le famiglie e le parole da tenere d'occhio sono riformulate, non copiate). Quando l'utente fornirà i campioni (3-5 brani di autori reali anteriori al 2023, 2-3 testi noiosi o artefatti), la sezione 3 si ricalibra e la 1 si arricchisce con ciò che i brani mostrano.
 
@@ -193,7 +193,7 @@ Rimedi, in ordine: avvicinare soggetto e verbo; spezzare dove l'idea cambia, alt
 - Un testo senza i tic può essere comunque noioso. Le cinque prove e il giudizio di una persona valgono più dei numeri.
 - Il testo inglese di un autore italiano ha un altro difetto tipico oltre ai calchi: la sintassi italiana (periodi lunghi, subordinate annidate, soggetto in fondo). Lo stilista lo tratta come un intoppo di lettura.
 
-## 11. Che cosa non è un segno (solo inglese)
+## 11. Che cosa non è un segno
 
 Il livello di intervento dello stilista è alto, ed è qui che si rischia di correggere troppo. Questi tratti non indicano scrittura automatica, e cambiarli peggiora il testo:
 

@@ -20,6 +20,10 @@ Il testo della licenza:
 
 Il catalogo completo di quel progetto (lessico, pattern strutturali, registri, voce personale, difesa dai rilevatori) non è incluso. Le parti compatibili con questo metodo sono sintetizzate in `diagnosi.md`.
 
+## Repertorio dei segni di scrittura automatica
+
+Le famiglie di tic aggiunte alla sezione 5 di `diagnosi.md` (enfasi sul significato, notorietà, brochure, attribuzioni vaghe, formula delle sfide, residui della chat, disclaimer sul sapere, segnaposto, formattazione) e la sezione 11 («Che cosa non è un segno») si ispirano al repertorio *Signs of AI writing*, compilato dalla comunità di Wikipedia (WikiProject AI Cleanup), distribuito con licenza Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0). Nessun passo ne è stato copiato: le famiglie, i criteri e gli esempi sono riformulati e scritti in italiano per questo progetto. Chi volesse incorporare passi del repertorio tali e quali deve rispettare l'attribuzione e la condivisione alle stesse condizioni di quella licenza, che è diversa dalla licenza MIT del plugin. Vedi anche `NOTE-LEGALI.md` del plugin `inglese`.
+
 ## Materiale proprio
 
 `strumenti/verifica_integrita.py` viene dal plugin `revisione` (autore cms). I criteri di stile, i calchi dall'inglese e il flusso a pezzi con approvazione provengono dallo stesso plugin e dai file di istruzioni del progetto di lavoro.

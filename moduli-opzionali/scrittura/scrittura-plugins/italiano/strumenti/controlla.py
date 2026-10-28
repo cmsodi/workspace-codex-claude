@@ -123,13 +123,51 @@ TIC_IT = [
     ("«non solo X ma anche Y»", r"\bnon solo\b[^.?!]{0,100}\bma anche\b"),
     ("contrasto «non X, è/ma Y» da valutare", r"\bnon (?:è|sono|si tratta di|significa)\b[^.?!;]{0,80}[,;:]\s*(?:ma|bensì|è|sono|si tratta)\b"),
     ("negazione seguita da due punti, da valutare", r"\bnon\b[^.?!;:]{3,80}:\s"),
-    ("lessico da brochure", r"\bsinergi\w*|\bolistic\w*|\bproattiv\w*|\bpanorama\b|\bnavigare\b|\bsfaccettat\w*|\bpoliedric\w*"),
+    ("lessico da brochure", r"\bsinergi\w*|\bolistic\w*|\bproattiv\w*|\bpanorama\b|\bnavigare\b|\bsfaccettat\w*|\bpoliedric\w*"
+                            r"|\bincastonat[oaie]\b|\bnel cuore (?:di|del|della|dello|dell['’])|\bmozzafiato\b|\bdi livello mondiale\b|\bdi fama internazionale\b"
+                            r"|\bric(?:co|ca|chi|che) (?:patrimonio|di storia|tradizione|offerta)\b|\bbellezze naturali\b|\bsenza pari\b|\bgemma nascosta\b"
+                            r"|\bimperdibil\w+|\bvasta gamma\b|\bbussola\b|\bviaggio alla scoperta\b|\bmosaico di\b"),
     ("giudizio generico", r"\b(?:molto interessante|affascinante|straordinari[oa]|fondamentale|cruciale)\b"),
     ("negazione difensiva, da valutare", r"\banziché\b|\bnon tanto\b[^.?!]{0,80}\bquanto\b|\blungi dall['’]essere\b|\bpiuttosto che\b"),
     ("lessico da traduzione o da burocrazia", r"\bimplementa\w*|\bimplementazion\w*|\bimpattar\w*|\bimpatto su\b|\babilitar\w*|\bal fine di\b|\bin termini di\b|\ba livello di\b|\butilizz\w+|\beffettu\w+"),
     ("iperbole", r"\bimprescindibil\w+|\brivoluzionari\w+|\ba 360 gradi\b|\bver[oa] e propri[oa]\b|\bsvolge un ruolo (?:chiave|centrale)\b"),
+    ("enfasi sul significato o sull'eredità", r"\bpunto di svolta\b|\b(?:è|rappresenta|costituisce) (?:una|la) testimonianza\b|\bsi inserisce in (?:un|una) (?:più )?(?:ampio|ampia|vasto|vasta)\b"
+                                              r"|\bpiù ampi[oa] (?:contesto|quadro|tendenza)\b|\b(?:eredità|lascito) (?:duratur[oa]|indelebile)\b|\bsegno indelebile\b"
+                                              r"|\bprofondamente radicat[oa]\b|\bpone le basi per\b|\bha aperto (?:la strada|un nuovo capitolo)\b|\bha acceso il dibattito\b"
+                                              r"|\bun momento (?:cruciale|chiave)\b|\bspartiacque\b|\bsegna(?:ndo)? una svolta\b"),
+    ("notorietà e copertura mediatica, da valutare", r"\bcopertura mediatica\b|\bfonti indipendenti\b|\bnumerose testate\b|\bpubblicazioni di settore\b"
+                                                     r"|\bpresenza attiva sui social\b|\besperto di fama (?:internazionale|mondiale)\b"),
+    ("attribuzione vaga (nominare la fonte o togliere)", r"\b(?:esperti|studiosi|analisti|osservatori|critici|ricercatori|storici|commentatori) "
+                                                         r"(?:concordano|sostengono|affermano|ritengono|sottolineano|notano|dicono|evidenziano)\b"
+                                                         r"|\bsecondo (?:molti|diversi|numerosi|alcuni) (?:esperti|studiosi|analisti|osservatori|critici)\b"
+                                                         r"|\b(?:numerosi|diversi|vari) studi (?:dimostrano|mostrano|indicano|suggeriscono|hanno dimostrato)\b"
+                                                         r"|\bgli studi (?:dimostrano|mostrano|indicano|suggeriscono)\b|\bda più parti\b|\bsecondo alcune fonti\b"
+                                                         r"|\bampiamente (?:considerat[oaie]|riconosciut[oaie]|ritenut[oaie])\b|\brapporti di settore\b"),
+    ("formula delle sfide e delle prospettive", r"\bnonostante (?:le|i|gli|queste|questi|tali) (?:\w+ )?(?:sfide|difficoltà|ostacoli|criticità|limiti)\b"
+                                                r"|\bdeve affrontare (?:diverse|numerose|molte|alcune) (?:sfide|criticità|difficoltà)\b|\bcontinua a (?:prosperare|ispirare)\b"
+                                                r"|\bprospettive future\b|\bfuturo (?:luminoso|promettente|radioso)\b"),
+    ("definizione «si riferisce a» e simili, da valutare", r"\bsi riferisce a\b|\bè (?:una|un) (?:completa|esaustiva|curata) (?:raccolta|panoramica|guida|lista)\b"),
+    ("associazione vaga, da valutare (se la relazione è nota, nominarla)", r"\bassociat[oaie] (?:a|con)\b|\bin connessione con\b"),
+    ("avvertenza didattica", r"\b(?:potrebbe|può) variare\b|\bi risultati possono variare\b|\btieni presente\b|\btenere presente che\b|\bè bene ricordare\b"
+                             r"|\b(?:in base a|dipende da) (?:diversi|vari|numerosi|molti) fattori\b"),
+    ("residuo della chat", r"\bcertamente!|\bottima domanda\b|\bfammi sapere\b|\bvuoi che (?:ti|io)\b|\becco (?:una|un|a te) (?:versione|riassunto|sintesi|panoramica|elenco|bozza)\b"
+                           r"|\bin questa sezione (?:vedremo|esamineremo|analizzeremo)\b|\bcome (?:modello linguistico|intelligenza artificiale)\b|\bnon esitare a\b"
+                           r"|\bsentiti libero\b|\bbuona lettura\b"),
+    ("disclaimer sul sapere o congetture sulle lacune", r"\b(?:al|fino al) mio ultimo aggiornamento\b|\bnon (?:è|sono) ampiamente (?:documentat[oaie]|not[oaie]|disponibil[ei])\b"
+                                                        r"|\bsulla base delle informazioni disponibili\b|\binformazioni (?:dettagliate )?(?:limitate|scarse)\b"
+                                                        r"|\bmantiene un profilo basso\b|\bnon sono disponibili informazioni dettagliate\b|\bfonti pubblicamente disponibili\b"),
+    ("segnaposto", r"\[(?:il tuo|tuo|inserisci|inserire|aggiungi|descrivi|nome|cognome|azienda|data|url|titolo)\b[^\]\n]{0,40}\](?![(\[])|\bINSERT_[A-Z_]+\b|\b\d{4}-XX-XX\b|\blorem ipsum\b"),
+    ("emoji come formattazione", "[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]"),
+    ("elenco con etichetta in grassetto (da valutare: se le etichette sono dati, restano)",
+     r"^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}\*\*:|^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}:\*\*"),
 ]
-CONNETTIVI_IT = r"\b(?:inoltre|tuttavia|pertanto|infatti|dunque|altresì|ciononostante)\b"
+# Famiglie le cui segnalazioni, se vicine, sono la firma di un testo da LLM (vedi grappoli).
+GRAPPOLO_IT = {
+    "apertura o chiusura formulaica", "annuncio di rilevanza", "meta-annuncio", "perifrasi della copula", "lessico da brochure",
+    "giudizio generico", "iperbole", "enfasi sul significato o sull'eredità", "attribuzione vaga (nominare la fonte o togliere)",
+    "formula delle sfide e delle prospettive", "avvertenza didattica",
+}
+CONNETTIVI_IT =r"\b(?:inoltre|tuttavia|pertanto|infatti|dunque|altresì|ciononostante)\b"
 
 # ---- tic inglesi (americano)
 
@@ -219,7 +257,7 @@ TIC_EN = [
     ("disclaimer sul sapere o congetture sulle lacune", r"\bas of my (?:last|latest|knowledge)\b|\bknowledge cut-?off\b|\bwhile specific details\b"
                                                         r"|\bnot widely (?:documented|disclosed|available|reported|known)\b|\bbased on (?:the )?available information\b"
                                                         r"|\bmaintains a low profile\b|\blimited information (?:is )?available\b|\bdetails are (?:limited|scarce)\b"),
-    ("segnaposto", r"\[(?:your|insert|add|describe|company|date|url|title|name)\b[^\]\n]{0,40}\](?!\()|\bINSERT_[A-Z_]+\b|\b\d{4}-XX-XX\b|\blorem ipsum\b"),
+    ("segnaposto", r"\[(?:your|insert|add|describe|company|date|url|title|name)\b[^\]\n]{0,40}\](?![(\[])|\bINSERT_[A-Z_]+\b|\b\d{4}-XX-XX\b|\blorem ipsum\b"),
     ("emoji come formattazione", "[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]"),
     ("elenco con etichetta in grassetto (da valutare: se le etichette sono dati, restano)",
      r"^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}\*\*:|^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}:\*\*"),
@@ -341,7 +379,9 @@ PROFILI = {
         "inizio_frase": ".!?«“\"",
         "ritmo": {"provvisorio": False, "mediana": (18, 32), "breve": 8, "medio": 20, "lungo": 35, "serie": 45,
                   "dev_piatta": 8, "dev_uniforme": 10},
+        "codice": "it",
         "tic": TIC_IT,
+        "grappolo": GRAPPOLO_IT,
         "connettivi": CONNETTIVI_IT,
         "etichette": etichette_it,
         "breve_staccato": 8,
@@ -358,7 +398,9 @@ PROFILI = {
         # PROVVISORIE: soglie italiane scalate di circa 0,85 (l'inglese usa meno parole per la stessa cosa).
         "ritmo": {"provvisorio": True, "mediana": (15, 27), "breve": 7, "medio": 17, "lungo": 30, "serie": 38,
                   "dev_piatta": 7, "dev_uniforme": 8.5},
+        "codice": "en",
         "tic": TIC_EN,
+        "grappolo": GRAPPOLO_EN,
         "connettivi": CONNETTIVI_EN,
         "etichette": etichette_en,
         "breve_staccato": 7,
@@ -624,28 +666,115 @@ def cmd_ritmo(args):
 
 # ---------------------------------------------------------------------- tic
 
-def grappoli_en(righe):
+def grappoli(righe):
     """Capoversi con tre o più indizi delle famiglie tipiche dei LLM.
 
     Un indizio isolato (una parola come «crucial») è normale; più indizi vicini sono la firma."""
     out = []
     for i, p in enumerate(paragrafi(righe), 1):
-        k = sum(len(re.findall(rx, p, re.IGNORECASE)) for nome, rx in TIC_EN if nome in GRAPPOLO_EN)
+        k = sum(len(re.findall(rx, p, re.IGNORECASE)) for nome, rx in PRF["tic"] if nome in PRF["grappolo"])
         if k >= 3:
             out.append(f"grappolo: il capoverso {i} ha {k} indizi di famiglie tipiche dei LLM (un indizio isolato è normale, più indizi vicini sono una firma)")
     return out
 
 
-def tic_aggiuntivi_en(righe):
-    """Controlli inglesi che non si riducono a un'espressione regolare per riga: grappoli, em dash, grassetto e virgola seriale."""
-    out = grappoli_en(righe)
-    pars = [p for p in paragrafi(righe)]
+PAROLE_FUNZIONE = {
+    "en": set("""about after against among and around before between but during from into like near once onto over per than that the their these this
+those through under until upon what when where which while whom whose with within without your""".split()),
+    "it": set("""alla alle allo agli anche come con dalla dalle dallo dagli dell della delle dello degli nella nelle nello negli sulla sulle sullo sugli
+dopo prima senza sotto sopra verso tra fra per che non più ogni quale quali questo questa questi queste loro essere""".split()),
+}
+
+
+def forma_titolo(testo):
+    """'titolo' se i titoli hanno le iniziali maiuscole sulle parole piene, 'frase' se solo la prima, None se non si può dire."""
+    t = re.sub(r"[*_`]", "", testo)
+    parole = re.findall(r"[^\W\d_][\w'’\-]*", t)
+    piene = [w for w in parole[1:] if len(w) >= 4 and w.lower() not in PAROLE_FUNZIONE[PRF["codice"]]]
+    if len(piene) < 2:
+        return None
+    maiuscole = sum(1 for w in piene if w[0].isupper()) / len(piene)
+    return "titolo" if maiuscole >= 0.75 else "frase" if maiuscole <= 0.25 else None
+
+
+def titoli_incoerenti(righe):
+    """Inglese: titoli dello stesso livello con convenzioni diverse (Title Case e prima maiuscola).
+    Italiano: titoli in Title Case all'inglese, da valutare (i nomi propri sono normali)."""
+    per_livello = {}
+    for r in righe:
+        m = re.match(r"^(#{1,6})\s+(.*?)\s*#*\s*$", r)
+        if m:
+            f = forma_titolo(m.group(2))
+            if f:
+                per_livello.setdefault(len(m.group(1)), []).append((f, m.group(2)))
+    out = []
+    for livello, voci in sorted(per_livello.items()):
+        if PRF["codice"] == "en":
+            t, s = [v for f, v in voci if f == "titolo"], [v for f, v in voci if f == "frase"]
+            if t and s:
+                out.append(f"titoli di livello {livello} incoerenti: {len(t)} in Title Case (es. «{t[0][:50]}») e {len(s)} con la sola prima maiuscola "
+                           f"(es. «{s[0][:50]}»). Si sceglie una convenzione per livello (`convenzioni-us.md`).")
+        else:
+            t = [v for f, v in voci if f == "titolo"]
+            if t:
+                out.append(f"titoli di livello {livello} in Title Case all'inglese ({len(t)}, es. «{t[0][:50]}»), da valutare: in italiano l'iniziale maiuscola è solo la prima parola e i nomi propri.")
+    return out
+
+
+def tipografia_mista(righe, doppie):
+    """Apostrofi dritti e ricurvi nello stesso testo (e, in inglese, virgolette doppie dritte e ricurve)."""
+    t = "\n".join(righe)
+    t = re.sub(r"```.*?```", "", t, flags=re.S)
+    t = re.sub(r"`[^`\n]*`", "", t)
+    t = re.sub(r"<[^>\n]+>", "", t)
+    t = re.sub(r"\]\([^)\n]*\)", "]", t)
+    t = re.sub(r"https?://\S+", "", t)
+    out = []
+    d, c = len(re.findall(r"(?<=\w)'(?=\w)", t)), len(re.findall(r"(?<=\w)’(?=\w)", t))
+    if d and c:
+        out.append(f"apostrofi misti: {d} dritti e {c} ricurvi nello stesso testo; si segue il documento e si resta coerenti.")
+    if doppie:
+        d, c = t.count('"'), t.count("“") + t.count("”")
+        if d and c:
+            out.append(f"virgolette doppie miste: {d} dritte e {c} ricurve nello stesso testo; si segue il documento e si resta coerenti.")
+    return out
+
+
+def aggiuntivi_comuni(righe):
+    """Controlli di entrambe le lingue che non si riducono a un'espressione regolare per riga."""
+    out = grappoli(righe)
     testo = testo_di(righe)
     parole = len(testo.split())
     k_b = len(re.findall(r"\*\*[^*\n]+\*\*", testo))
     if k_b >= 5 and 1000 * k_b / max(parole, 1) > 8:
         out.append(f"grassetto: {k_b} passaggi in {parole} parole ({1000 * k_b / max(parole, 1):.1f} ogni mille). Nel corpo della prosa il grassetto non serve; "
                    "le etichette a inizio paragrafo e i termini di un glossario sono legittimi.")
+    out += titoli_incoerenti(righe)
+    out += tipografia_mista(righe, doppie=PRF["codice"] == "en")
+    return out
+
+
+def tic_aggiuntivi_it(righe):
+    """Controlli italiani che non si riducono a un'espressione regolare per riga."""
+    return aggiuntivi_comuni(righe)
+
+
+def tic_aggiuntivi_en(righe):
+    """Controlli inglesi che non si riducono a un'espressione regolare per riga: coerenza, em dash e virgola seriale."""
+    out = aggiuntivi_comuni(righe)
+    pars = [p for p in paragrafi(righe)]
+    testo = testo_di(righe)
+    parole = len(testo.split())
+    k_us, k_usa = len(re.findall(r"\bU\.S\.", testo)), len(re.findall(r"\bUS\b", testo))
+    if k_us and k_usa:
+        out.append(f"U.S. e US nello stesso testo ({k_us} e {k_usa}): una forma sola in tutto il documento.")
+    senza_virgola = re.findall(r"\b(?:e\.g|i\.e)\.(?!,)", testo)
+    if senza_virgola:
+        out.append(f"e.g. / i.e. senza la virgola dopo: {len(senza_virgola)} occorrenze (il Chicago vuole «e.g.,» e «i.e.,»).")
+    contratte = len(re.findall(r"\b\w+n['’]t\b|\b(?:it|that|there|he|she|we|they|you|i)['’](?:s|re|ve|ll|d|m)\b", testo, re.I))
+    estese = len(re.findall(r"\b(?:do|does|did|is|are|was|were|have|has|had|would|could|should|will|can) not\b|\bcannot\b", testo, re.I))
+    if contratte >= 3 and estese >= 3:
+        out.append(f"registro incoerente, da valutare: {contratte} contrazioni e {estese} forme estese (do not, is not, cannot) nello stesso testo.")
     k_em = testo.count("—")
     if k_em:
         densi = [i for i, p in enumerate(pars, 1) if p.count("—") > 2]
@@ -682,10 +811,10 @@ def cmd_tic(args):
                     a, b = max(0, m.start() - 25), min(len(r), m.end() + 25)
                     print(f"   riga {i:3d} [{nome}] …{r[a:b].strip()}…")
                     totale += 1
-        if PRF is PROFILI["en"]:
-            for msg in tic_aggiuntivi_en(righe):
-                print(f"   [en] {msg}")
-                totale += 1
+        aggiuntivi = tic_aggiuntivi_en if PRF is PROFILI["en"] else tic_aggiuntivi_it
+        for msg in aggiuntivi(righe):
+            print(f"   [{PRF['codice']}] {msg}")
+            totale += 1
         parole = len(testo_di(righe).split())
         k = len(re.findall(PRF["connettivi"], testo_di(righe), re.IGNORECASE))
         print(f"   connettivi di rotazione: {k} in {parole} parole ({1000 * k / max(parole, 1):.1f} ogni mille)")

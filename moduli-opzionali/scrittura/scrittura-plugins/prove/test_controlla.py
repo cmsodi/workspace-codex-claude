@@ -279,8 +279,44 @@ class InglesTic(unittest.TestCase):
         _, out = esegui(IT, "tic", "en-llm.md")
         self.assertNotIn("lessico da LLM", out)
         _, out = esegui(IT, "tic", "en-segni-catalogo.md")
-        for etichetta in ("grappolo", "attribuzione vaga", "segnaposto", "emoji"):
+        for etichetta in ("grappolo", "attribuzione vaga", "segnaposto"):
             self.assertNotIn(etichetta, out, etichetta)
+
+    def tic_su(self, testo, *, lingua="en"):
+        t = file_temporaneo(testo)
+        try:
+            _, out = esegui(EN, "--lingua", lingua, "tic", t)
+        finally:
+            os.unlink(t)
+        return out
+
+    def test_titoli_incoerenti_nello_stesso_livello(self):
+        out = self.tic_su("# Harbor ledger\n\n## Harbor Ledger Basics\n\nText here.\n\n## How the ledger works today\n\nMore text.\n")
+        self.assertIn("titoli di livello 2 incoerenti", out)
+
+    def test_titoli_coerenti_o_di_livelli_diversi_non_sono_segnalati(self):
+        out = self.tic_su("# The Harbor Ledger Explained\n\n## How the ledger works today\n\nText.\n\n## Why the ledger matters here\n\nMore.\n")
+        self.assertNotIn("incoerenti", out)
+
+    def test_apostrofi_e_virgolette_miste(self):
+        out = self.tic_su('It\'s the clerk’s ledger. He said "no" and then “yes”.\n')
+        self.assertIn("apostrofi misti: 1 dritti e 1 ricurvi", out)
+        self.assertIn("virgolette doppie miste: 2 dritte e 2 ricurve", out)
+
+    def test_tipografia_coerente_e_codice_non_segnalati(self):
+        out = self.tic_su("It’s the clerk’s ledger. Use `it's` or see [the page](https://example.org/it's-here) for details.\n")
+        self.assertNotIn("misti", out)
+
+    def test_us_ed_eg(self):
+        out = self.tic_su("The U.S. office and the US office agree (e.g. on fees; i.e., on the rate).\n")
+        self.assertIn("U.S. e US nello stesso testo (1 e 1)", out)
+        self.assertIn("e.g. / i.e. senza la virgola dopo: 1 occorrenze", out)
+
+    def test_contrazioni_e_forme_estese(self):
+        out = self.tic_su("It's late. We don't know. They're gone. He did not call. She is not here. It does not matter.\n")
+        self.assertIn("registro incoerente", out)
+        out = self.tic_su("It's late. We don't know. They're gone. He called. She left.\n")
+        self.assertNotIn("registro incoerente", out)
 
     def test_segni_del_catalogo(self):
         rc, out = esegui(EN, "--lingua", "en", "tic", "en-segni-catalogo.md")
@@ -324,6 +360,68 @@ class InglesTic(unittest.TestCase):
         finally:
             os.unlink(t)
         self.assertIn("[en] grassetto: 7 passaggi", out)
+
+
+class ItalianoSegni(unittest.TestCase):
+    """Parità italiana con i segni del catalogo: famiglie, grappoli, non-segni, coerenza."""
+
+    def tic_su(self, testo):
+        t = file_temporaneo(testo)
+        try:
+            _, out = esegui(IT, "tic", t)
+        finally:
+            os.unlink(t)
+        return out
+
+    def test_segni_del_catalogo(self):
+        rc, out = esegui(IT, "tic", "it-segni-catalogo.md")
+        self.assertEqual(rc, 0)
+        for etichetta in ("enfasi sul significato", "lessico da brochure", "attribuzione vaga", "formula delle sfide",
+                          "associazione vaga", "avvertenza didattica", "residuo della chat", "disclaimer sul sapere",
+                          "segnaposto", "emoji come formattazione", "elenco con etichetta in grassetto",
+                          "titoli di livello 1 in Title Case"):
+            self.assertIn(etichetta, out, etichetta)
+
+    def test_etichette_di_lavoro_e_link_non_sono_segnaposto(self):
+        _, out = esegui(IT, "tic", "it-segni-catalogo.md")
+        segnaposto = [r for r in out.splitlines() if "[segnaposto]" in r]
+        self.assertEqual(len(segnaposto), 1, segnaposto)
+        self.assertIn("[Il tuo nome]", segnaposto[0])
+        _, out = esegui(IT, "tic", "it-non-segni.md")
+        self.assertNotIn("segnaposto", out)
+
+    def test_grappolo_solo_con_indizi_vicini(self):
+        _, out = esegui(IT, "tic", "it-segni-catalogo.md")
+        self.assertIn("[it] grappolo: il capoverso 1", out)
+        self.assertIn("[it] grappolo: il capoverso 2", out)
+        _, out = esegui(IT, "tic", "it-non-segni.md")
+        self.assertNotIn("grappolo", out)
+
+    def test_testo_formale_e_corretto_non_ha_segni_nuovi(self):
+        _, out = esegui(IT, "tic", "it-non-segni.md")
+        for etichetta in ("enfasi sul significato", "brochure", "attribuzione vaga", "residuo della chat", "emoji",
+                          "avvertenza didattica", "disclaimer", "Title Case", "misti"):
+            self.assertNotIn(etichetta, out, etichetta)
+
+    def test_testo_di_autore_senza_segni_nuovi(self):
+        _, out = esegui(IT, "tic", "it-origine.md")
+        for etichetta in ("grappolo", "attribuzione vaga", "segnaposto", "residuo della chat", "emoji", "Title Case", "misti"):
+            self.assertNotIn(etichetta, out, etichetta)
+
+    def test_apostrofi_misti_ma_non_le_virgolette(self):
+        out = self.tic_su("L'uomo e l’anno. Disse «sì» e poi \"no\".\n")
+        self.assertIn("apostrofi misti: 1 dritti e 1 ricurvi", out)
+        self.assertNotIn("virgolette doppie miste", out)
+
+    def test_titolo_in_frase_non_e_title_case(self):
+        out = self.tic_su("# Il registro del porto\n\n## Come funziona il registro\n\nTesto.\n")
+        self.assertNotIn("Title Case", out)
+
+    def test_controlli_inglesi_non_scattano_in_italiano(self):
+        out = self.tic_su("Gli U.S. e gli US; per es. e.g. qui. Non lo so. Non lo sapevo. Non lo saprò. Non lo sappiamo.\n")
+        self.assertNotIn("U.S. e US", out)
+        self.assertNotIn("e.g.", out)
+        self.assertNotIn("registro incoerente", out)
 
 
 class InglesRitmoEScorrevolezza(unittest.TestCase):

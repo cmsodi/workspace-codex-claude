@@ -17,7 +17,7 @@ Richiesta: $ARGUMENTS
 
 ## File condivisi e convenzioni
 
-I file condivisi stanno nella radice del plugin, due livelli sopra questa skill: `${CLAUDE_SKILL_DIR}/../../riferimenti/` (`contratto.md`, `diagnosi.md`, `grammatica-italiana.md`) e `${CLAUDE_SKILL_DIR}/../../strumenti/` (`controlla.py`, `verifica_integrita.py`). Se la variabile non risulta sostituita, cercali con Glob (`~/.claude/plugins/**/italiano/riferimenti/contratto.md`) o relativamente a questo file (`../../`). Leggi `contratto.md`. Prima di scrivere leggi le sezioni 1, 2 e 3 di `diagnosi.md` (il modello di buona prosa, le cinque prove, il ritmo). Gli elenchi dei tic della sezione 5 si consultano dopo la prima stesura, non prima.
+I file condivisi stanno nella radice del plugin, due livelli sopra questa skill: `${CLAUDE_SKILL_DIR}/../../riferimenti/` (`contratto.md`, `diagnosi.md`, `grammatica-italiana.md`) e `${CLAUDE_SKILL_DIR}/../../strumenti/` (`controlla.py`, `verifica_integrita.py`). Se la variabile non risulta sostituita, cercali con Glob (`~/.claude/plugins/**/italiano/riferimenti/contratto.md`) o relativamente a questo file (`../../`). Leggi `contratto.md`. Prima di scrivere leggi le sezioni 1, 2, 3 e 11 di `diagnosi.md` (il modello di buona prosa, le cinque prove, il ritmo, e che cosa *non* è un segno di scrittura automatica). Gli elenchi dei tic della sezione 5 si consultano dopo la prima stesura, non prima.
 
 Se il progetto ha un `CLAUDE.md` o un file simile con convenzioni (cartelle, sezione Note, tipografia), valgono quelle. In mancanza, i default tipografici sono: caporali « » per citazioni e dialoghi, niente trattini lunghi (né lineetta lunga né media né " - " usato come pausa: virgola, punto, due punti o parentesi), titoli con la sola prima maiuscola, tre puntini, niente virgola prima della «e» finale di un elenco. Se l'utente ha escluso le note, il documento non ha sezione Note, né commenti, né link.
 
@@ -88,6 +88,10 @@ Dopo questa passata misura (`controlla.py ritmo`), poi continua.
 - **Fonti dietro l'affermazione.** Quando la nota sostiene un fatto già verificato, formula il fatto direttamente e togli mediazioni come «la documentazione descrive» o «il rapporto attesta». Conserva l'attribuzione se identifica una dichiarazione, una stima, una posizione, un conflitto o un limite probatorio; eliminarla in questi casi modificherebbe il fatto.
 - **Nessi aggiunti.** Un nesso causale o consecutivo non è un dato né una cautela, ma è una lettura del ragionamento. Aggiungilo quando il rapporto si ricava con evidenza dal testo, non per riempire, e elencalo nel rapporto perché l'autore lo confermi. Se il rapporto non è evidente, lascia le frasi accostate e fai una domanda nel rapporto.
 - **Il contrasto «non X ma Y»** solo quando X è stato davvero sostenuto da qualcuno nel testo.
+- **Cura la causa, non il sintomo.** Una frase segnalata ha sempre una funzione (gonfiare il significato, coprirsi con un'autorità senza nome, smentire ciò che nessuno ha detto, riassumere sé stessa). Chiediti che cosa sta facendo e interviene su quello: la frase si cancella, oppure si sostituisce con il fatto specifico che già sta nel testo. Se il fatto non c'è, scrivi la versione semplice e fai la domanda all'autore: non inventare mai un fatto al posto del fronzolo.
+- **Attribuzioni vaghe** («secondo molti esperti», «numerosi studi dimostrano», «da più parti», «ampiamente considerato»). Non puoi inventare la fonte (primo limite). Se il testo nomina da altre parti chi parla, usa quel nome. Altrimenti lascia la frase com'è, o rendila in forma di tesi dell'autore solo se il senso non cambia, e mettila nel rapporto sotto «Domande per l'autore» perché passi al verificatore o riceva una fonte. Non vale per le cautele con cui la fonte originale si protegge («si ritiene che», «secondo» seguito da un nome): quelle sono informazione e restano.
+- **Lacune e disclaimer** («non è ampiamente documentato», «le informazioni sono limitate»). Se qualcosa non si sa, dillo una volta, in modo concreto e con ciò che il lettore deve fare; non riempire il vuoto con ipotesi.
+- **Non correggere i non-segni:** grammatica corretta, registro formale, un connettivo isolato, una parola dell'elenco dei tic usata in senso proprio, formattazione uniforme (`diagnosi.md`, sezione 11). I segnali di `controlla.py tic` sono indizi: i «grappoli» (tre o più indizi nello stesso capoverso) pesano più dei singoli. La formattazione (emoji, grassetti, elenchi con etichetta, titoli) appartiene alla struttura: non si cambia, si segnala nel rapporto.
 - **Voce.** Sobria e stabile. Chi scrive si fa notare il meno possibile.
 - **Chiusura.** Un richiamo concreto all'apertura oppure una sintesi precisa di ciò che si sa e di ciò che resta aperto. Niente morale. Una chiusura a effetto senza contenuto è un fronzolo: si segnala nel rapporto e si decide con l'autore.
 - **Non sostituire un tic con un altro.** Se correggi un difetto, cambia la struttura della frase, non solo le parole. Se la frase di partenza scorre, lasciala.
@@ -130,7 +134,8 @@ Conta le parole (`wc -w`). **Fino a circa 4.000 parole** lavora direttamente su 
    - **Margine:** che cosa avresti toccato con un livello più alto e hai lasciato, e perché (gusto, voce dell'autore, rischio per i fatti).
    - **Scelte nei dubbi** che toccano il senso.
    - **Misure:** ritmo, integrità e scorrevolezza, prima e dopo.
-   - **Domande per l'autore:** fatti che mancano o punti che richiedono una decisione.
+   - **Domande per l'autore:** fatti che mancano, attribuzioni vaghe senza fonte o punti che richiedono una decisione.
+   - **Segni lasciati di proposito:** indizi di `controlla.py` che hai tenuto (citazione, nome proprio, parola in senso proprio) e perché.
    - **Che cosa non è stato verificato** (per esempio se la fase 2 è stata saltata).
 
 Quando aggiorni un testo già rivisto in precedenza, dì che cosa è cambiato rispetto alla versione precedente.

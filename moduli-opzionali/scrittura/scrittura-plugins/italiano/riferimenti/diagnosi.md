@@ -1,6 +1,6 @@
 # Diagnosi: il modello di buona prosa e i suoi nemici
 
-Riferimento per la fase 3. Le sezioni 1-4 servono prima e durante la scrittura. La 5, la 6 e la 7 si consultano dopo la prima stesura, come controllo.
+Riferimento per la fase 3. Le sezioni 1-4 servono prima e durante la scrittura. La 5, la 6 e la 7 si consultano dopo la prima stesura, come controllo. La sezione 11 dice che cosa *non* è un segno, per non correggere troppo.
 
 ## 1. Modello positivo
 
@@ -60,7 +60,9 @@ Una frase breve vale se **aggiunge un'informazione autonoma o capovolge un'attes
 
 ## 5. Le due famiglie di tic
 
-Da consultare dopo la prima stesura. Una voce isolata è una svista, più voci vicine sono una firma.
+Da consultare dopo la prima stesura. Una voce isolata è una svista, più voci vicine sono una firma: `controlla.py tic` segnala come «grappolo» il capoverso con tre o più indizi delle famiglie tipiche dei LLM.
+
+**I segni sono sintomi.** I modelli ripiegano sulla formulazione più frequente, e così un fatto specifico si liscia in un'affermazione generica che suona importante. Cambiare la parola segnalata con un sinonimo nasconde il sintomo e lascia la causa. Davanti a una frase segnalata ci si chiede *che cosa sta facendo* (gonfiare il significato, coprirsi con un'autorità senza nome, smentire un'idea che nessuno ha espresso, riassumere sé stessa) e si interviene su quello: si cancella la frase, o la si sostituisce con il fatto specifico che sosteneva l'effetto. Se il fatto non c'è nel testo, non lo si inventa: si scrive la versione semplice e si fa la domanda all'autore nel rapporto.
 
 **Tic tipici degli LLM**
 
@@ -78,6 +80,18 @@ Da consultare dopo la prima stesura. Una voce isolata è una svista, più voci v
 - paragrafi con la stessa architettura (apertura, sviluppo, battuta) più di due volte;
 - morale in chiusura;
 - connettivi a rotazione («inoltre», «tuttavia», «pertanto»). Il difetto è la rotazione meccanica di connettivi vuoti, ripetuti a ogni capoverso, non l'uso di nessi che esprimono un rapporto reale: togliere tutti i connettivi per eliminare il tic produce un testo telegrafico (sezione 9);
+- **enfasi sul significato e sull'eredità:** il fatto ordinario seguito da una frase su perché conta o su che cosa «testimonia» («un vero punto di svolta», «si inserisce in un più ampio quadro», «un segno indelebile», «pone le basi per», «ha acceso il dibattito»). Rimedio: cancellare la frase, o sostituirla con un fatto che mostri l'importanza («L'istituto nacque nel 1989. Fu il primo ufficio regionale di statistica del Paese.»);
+- **notorietà dimostrata con l'elenco delle testate** («numerose testate», «copertura mediatica», «presenza attiva sui social»). Si dice che cosa la cosa è o ha fatto; la copertura si cita solo come fonte di un'affermazione precisa;
+- **linguaggio da brochure** per soggetti neutri («incastonato nel cuore di», «mozzafiato», «di fama internazionale», «ricco patrimonio», «imperdibile», «vasta gamma»). Si sostituisce l'aggettivo con il fatto che lo meriterebbe, o lo si toglie;
+- **attribuzioni vaghe:** opinioni appese ad autorità senza nome o una fonte presentata come molte («secondo molti esperti», «numerosi studi dimostrano», «da più parti», «ampiamente considerato»). Si nomina la fonte, oppure si presenta l'affermazione come tesi dell'autore, oppure si taglia. **Nel nostro metodo:** lo stilista non può inventare la fonte, quindi segnala l'attribuzione nel rapporto come domanda per l'autore (o per il verificatore) e, se resta senza fonte, la scrive come tesi dell'autore o la toglie dichiarandolo. Non vale per le cautele con cui la fonte originale si protegge («si ritiene che», «secondo» seguito da un nome): sono informazione e si conservano;
+- **formula delle sfide e delle prospettive:** «nonostante le difficoltà, X deve affrontare diverse sfide… continua a prosperare», spesso in una sezione finale. Un problema reale si dice dove serve, con i fatti; l'epilogo ottimista si toglie;
+- **relazione vaga** quando è nota («associato a», «in connessione con»): si dice che cosa è accaduto («Nel 2017 era amministratrice delegata di ExampleCorp.»);
+- **avvertenze didattiche:** «può variare», «tieni presente che», «dipende da diversi fattori». Si dice la cosa («Gli orari cambiano in inverno.» invece di «Gli orari possono variare.»);
+- **residui della conversazione con il modello:** «Certamente!», «Ottima domanda», «Spero che questo ti sia utile», «Fammi sapere se…», «Ecco una versione…», «In questa sezione vedremo…»;
+- **congetture sulle lacune e disclaimer sul sapere:** «al mio ultimo aggiornamento», «non è ampiamente documentato», «sulla base delle informazioni disponibili», seguiti da ipotesi su ciò che l'informazione mancante «probabilmente» è. Se qualcosa non si sa, lo si dice una volta, in modo concreto, con ciò che il lettore deve fare («Gli orari non sono pubblicati: telefonare prima.»);
+- **segnaposto dimenticati:** `[Il tuo nome]`, `[Descrivi la sezione]`, `INSERT_URL`, `2026-XX-XX`. Le etichette di lavoro del metodo (`[MANCA: …]`, `[DA VERIFICARE]`) non sono segnaposto dimenticati e `controlla.py` non le segnala;
+- **formattazione:** emoji davanti a titoli e voci, grassetto sparso nel corpo, tabelle di due o tre righe che starebbero in una frase, titoli con le iniziali maiuscole all'inglese («Il Museo Del Porto»). La formattazione appartiene alla struttura: lo stilista non la cambia e la segnala nel rapporto;
+- **elegant variation:** «l'artista… il pittore… il creativo… il visionario» per un solo soggetto. Il rimedio è ripetere il nome o usare il pronome; lo strumento non la vede, la vede chi legge;
 - domande retoriche generiche («ti sei mai chiesto…?»);
 - elenchi con intestazione in grassetto dentro la riga.
 
@@ -162,3 +176,18 @@ Rimedi, in ordine: eliminare o incorporare le frasi e le parti di frase che fall
 - Il modello positivo nasce da due testi. Va ampliato con altri campioni di autori diversi, di data anteriore al 2023, nel registro che interessa (per esempio rapporti e analisi).
 - Un testo senza i tic può essere comunque noioso. Le cinque prove e il giudizio di una persona valgono più dei numeri.
 - Altre risorse, da attaccare alla fase 3 quando disponibili: le guide di grammatica normativa, lessico, pattern e registri di `italiano-scrittura-anti-ai` (cartella `references/`).
+
+## 11. Che cosa non è un segno
+
+Il livello di intervento dello stilista è alto, ed è qui che si rischia di correggere troppo. Questi tratti non indicano scrittura automatica, e cambiarli peggiora il testo:
+
+- grammatica e ortografia corrette;
+- registro formale, parole lunghe, prosa «neutra» in genere;
+- un registro che mescola tono colloquiale e formale;
+- un singolo connettivo («tuttavia», «pertanto») o una singola parola dell'elenco dei tic: contano il numero e la vicinanza, e per questo `controlla.py` segnala i grappoli;
+- affermazioni senza fonte (di quelle si occupa il verificatore, non lo stile);
+- formattazione corretta e uniforme;
+- parole usate in senso proprio o di settore («panorama» per un dipinto, «robusto» in statistica, «navigare» in mare) e nomi propri;
+- citazioni di persone o di fonti, titoli di opere, testo legale: non si riscrivono mai per togliere un segno.
+
+Un segno tenuto di proposito (una citazione, un nome proprio, una parola in senso letterale) si dichiara nel rapporto. Un testo con zero segnalazioni non è per questo un buon testo: valgono sempre le cinque prove della sezione 2.
