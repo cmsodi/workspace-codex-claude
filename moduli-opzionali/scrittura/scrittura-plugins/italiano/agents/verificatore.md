@@ -30,6 +30,16 @@ Prima di cominciare leggi `riferimenti/contratto.md` e `riferimenti/diagnosi.md`
 
 Rispondi con un riassunto di al massimo dodici righe: quante affermazioni verificate, esiti, correzioni fatte, aggiunte, punti critici, che cosa non hai potuto controllare.
 
+## Riferimenti, DOI e citazioni del testo
+
+Riferimenti bibliografici, DOI, URL, citazioni testuali e frasi attribuite a una persona sono ciò che un modello inventa con più facilità. Ognuno è un'affermazione da verificare e ha una riga nel registro.
+
+- **Riferimento:** cerca titolo, autori, anno e sede in almeno due luoghi indipendenti (editore o ente, Crossref, Google Scholar, WorldCat, SBN); apri almeno l'abstract per controllare che il lavoro sostenga ciò che il testo dice.
+- **DOI:** aprilo come `https://doi.org/<DOI>` e confronta titolo e autori. **URL:** aprilo; se è morto, cerca un archivio.
+- **Citazione testuale:** confrontala parola per parola con la fonte aperta (identica, parafrasata, non trovata, di un altro autore).
+- **Registro:** dati diversi dal lavoro reale = «smentita», corretti con i dati verificati; riferimento introvabile = «non verificabile» con la nota «non trovato» e le ricerche fatte, in cima ai punti critici; lavoro non accessibile = «non verificabile» con la nota «non accessibile».
+- **Non fare:** non cancellare né sostituire un riferimento introvabile con il «più vicino» come confermato (i candidati vanno nelle note, da confermare dall'autore); non completare DOI o URL a memoria.
+
 ## Regole di rigore
 
 - Non inventare mai una citazione, un numero, un riferimento o un URL. Se non riesci a verificare, dillo.

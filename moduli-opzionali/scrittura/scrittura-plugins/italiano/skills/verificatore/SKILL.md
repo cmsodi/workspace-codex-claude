@@ -41,6 +41,17 @@ Per più di una decina di affermazioni, o per ricerche ampie che riempirebbero i
 
 Esegui, se puoi, `controlla.py integrita ORIGINE RISULTATO --consenti-aggiunte` e `struttura`: le aggiunte diventano avvisi e vanno nel registro.
 
+## Riferimenti, DOI e citazioni del testo
+
+Riferimenti bibliografici, DOI, URL, citazioni testuali e frasi attribuite a una persona sono ciò che un modello inventa con più facilità: un riferimento plausibile ma inesistente, un DOI che porta a un altro lavoro, una citazione attribuita alla persona sbagliata o parafrasata come se fosse testuale. Ognuno di questi elementi del testo è un'affermazione da verificare, anche quando non regge l'argomento. Ognuno entra nel registro con una riga.
+
+- **Riferimento bibliografico.** Cerca titolo, autori, anno e sede (rivista, editore, ente) in almeno due luoghi indipendenti: il sito dell'editore o dell'ente, un indice (Crossref, Google Scholar, WorldCat, SBN, la banca dati del settore). Controlla che esista, che autori, anno e sede coincidano e, aprendo almeno l'abstract, che il lavoro sostenga ciò che il testo gli attribuisce.
+- **DOI.** Aprilo come `https://doi.org/<DOI>` e confronta titolo e autori. Un DOI che porta a un altro lavoro è un errore, anche se il lavoro esiste.
+- **URL.** Aprilo. Se è morto, cerca la versione in un archivio e registrala come tale; controlla che il contenuto corrisponda a ciò che il testo dice.
+- **Citazione testuale.** Confrontala parola per parola con la fonte aperta. Esiti: identica; diversa nelle parole ma con lo stesso senso (va resa fedele o tolta dalle virgolette); non trovata; di un altro autore. Una citazione tradotta lo dichiara.
+- **Come si registra.** Un riferimento di cui trovi il lavoro reale con dati diversi (autore, anno, titolo, DOI) è «smentita» e si corregge con i dati verificati. Un riferimento che non trovi in nessun luogo è «non verificabile» con la nota «non trovato» e l'elenco delle ricerche fatte, e va in cima ai punti critici del riassunto: l'assenza di un riferimento specifico è un'informazione, non un vuoto. Un lavoro dietro accesso a pagamento che non puoi aprire è «non verificabile» con la nota «non accessibile». Una citazione verificata solo su una fonte secondaria lo dice.
+- **Che cosa non fai.** Non cancelli un riferimento non trovato e non lo sostituisci con il lavoro «più vicino» come se fosse confermato: i candidati vanno nelle note, da confermare dall'autore. Non completi DOI o URL a memoria: li scrivi solo se li hai visti in una pagina aperta.
+
 ## Regole di rigore
 
 - Non inventare mai una citazione, un numero, un riferimento o un URL. Se non riesci a verificare, dillo.
@@ -56,6 +67,7 @@ Per le affermazioni più importanti conviene un secondo controllo con un altro m
 
 ## Prima di consegnare
 
+- Ogni riferimento bibliografico, DOI, URL e citazione testuale del testo ha una riga nel registro, con l'esito e se è stato verificato su una pagina aperta.
 - Ogni correzione al testo ha una riga nel registro.
 - Nessuna fonte compare senza URL e data di consultazione.
 - Ciò che non hai potuto verificare è dichiarato come tale.

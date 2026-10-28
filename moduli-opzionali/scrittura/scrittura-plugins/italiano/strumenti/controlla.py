@@ -208,7 +208,10 @@ TIC_EN = [
     ("domanda retorica con risposta", r"\?\s+(?:The answer|It(?:'s|’s| is)|Simple|Because|Well|Simply)\b"),
     ("perifrasi della copula", r"\b(?:serves|stands|acts|functions) as\b|\bboasts\b|\bplays an? (?:crucial|key|pivotal|vital|important|significant|central|critical) role\b|\ba testament to\b|\bstands as a\b"),
     ("«not X, it's Y» / «not just X but Y»", r"\bnot (?:just|only|merely|simply)\b[^.?!]{0,120}\bbut\b"
-                                         r"|(?:\b(?:is|are|was|were)(?:n['’]t| not)|\b(?:it|this|that)['’]s not)\s+(?:just |only |merely |simply )?(?:about )?[^.?!;]{2,70}[,;:.—–]\s*(?:it|this|that|they|but|rather)\b"
+                                         r"|(?:\b(?:is|are|was|were)(?:n['’]t| not)|\b(?:it|this|that)['’]s not)\s+(?:just |only |merely |simply )?(?:about )?[^.?!;]{2,70}"
+                                         r"[,;:—–]\s*(?:it|this|that|they|but|rather)\b"
+                                         r"|\b(?:(?:it|this|that)(?:['’]s not| is not| isn['’]t| was not| wasn['’]t)|(?:they|these|those)(?: are not| aren['’]t| were not| weren['’]t))"
+                                         r"\s+(?:just |only |merely |simply )?(?:about )?[^.?!;]{2,70}\.\s+(?:it|this|that|they)(?:['’]s|['’]re|\s+(?:is|are|was|were))\b"
                                          r"|\bmore than just\b|\bfar from (?:being|a|an)\b"),
     ("negazione difensiva «rather than / instead of», da valutare", r"\brather than\b|\binstead of\b|\bas opposed to\b|\bnot so much\b"),
     ("lessico da LLM", r"\bdelv\w+|\btapestry\b|\bpivotal\b|\bunderscor\w+|\bintricate\b|\bmultifaceted\b|\bnuanced\b|\bseamless\w*|\bholistic\w*|\bvibrant\b|\bbustling\b"
@@ -740,9 +743,45 @@ def tipografia_mista(righe, doppie):
     return out
 
 
+def punteggiatura_di_pausa(righe):
+    """Densità di due punti, punto e virgola e parentesi.
+
+    Chi non può usare il trattino lungo tende a sostituirlo con questi segni: la sostituzione è lo stesso tic.
+    Soglie PROVVISORIE (nessun campione di autori reali misurato) e un testo breve non si misura."""
+    pars = paragrafi(righe)
+    parole = sum(len(p.split()) for p in pars)
+    if parole < 150:
+        return []
+
+    def pulito(p):
+        p = re.sub(r"https?://\S+", "", p)
+        p = re.sub(r"\]\([^)\n]*\)", "]", p)
+        p = re.sub(r"&\w+;", "", p)
+        return p
+
+    segni = (
+        ("due punti", r":(?=\s)", 8, 5),
+        ("punto e virgola", r";", 6, 4),
+        ("parentesi", r"\(", 10, 6),
+    )
+    out = []
+    for nome, rx, per_mille, minimo in segni:
+        per_par = [len(re.findall(rx, pulito(p))) for p in pars]
+        k = sum(per_par)
+        dens = 1000 * k / parole
+        if k >= minimo and dens >= per_mille:
+            piu = sorted(range(len(pars)), key=lambda i: -per_par[i])[:3]
+            dove = ", ".join(f"{i + 1} ({per_par[i]})" for i in piu if per_par[i] > 1)
+            out.append(f"{nome}: {k} in {parole} parole ({dens:.1f} ogni mille, soglie provvisorie)"
+                       + (f"; più fitti nei capoversi {dove}" if dove else "")
+                       + ". Se il trattino lungo è vietato, controlla che questo segno non lo stia sostituendo: si cambia la struttura della frase, non il segno.")
+    return out
+
+
 def aggiuntivi_comuni(righe):
     """Controlli di entrambe le lingue che non si riducono a un'espressione regolare per riga."""
     out = grappoli(righe)
+    out += punteggiatura_di_pausa(righe)
     testo = testo_di(righe)
     parole = len(testo.split())
     k_b = len(re.findall(r"\*\*[^*\n]+\*\*", testo))

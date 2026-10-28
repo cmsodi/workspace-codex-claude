@@ -318,6 +318,29 @@ class InglesTic(unittest.TestCase):
         out = self.tic_su("It's late. We don't know. They're gone. He called. She left.\n")
         self.assertNotIn("registro incoerente", out)
 
+    def test_not_x_its_y_dopo_un_punto_solo_con_soggetto_ripreso(self):
+        for t in ("It isn't a coffee shop. It's a gathering place.", "It's not a bug. It's a feature.",
+                  "This is not a recipe, it is a story."):
+            self.assertIn("«not X, it's Y»", self.tic_su(t + "\n"), t)
+        for t in ("She is not here. It does not matter. The clerk is not late. They are waiting.",
+                  "The ledger is not complete. It is missing March."):
+            self.assertNotIn("«not X, it's Y»", self.tic_su(t + "\n"), t)
+
+    def test_punteggiatura_sostitutiva_en(self):
+        fitto = "The plan has one aim: speed. The plan is short; it works (mostly). " * 30
+        out = self.tic_su(fitto + "\n")
+        for segno in ("due punti: 30", "punto e virgola: 30", "parentesi: 30"):
+            self.assertIn(segno, out, segno)
+        self.assertIn("soglie provvisorie", out)
+
+    def test_punteggiatura_normale_e_testi_brevi_non_segnalati(self):
+        _, out = esegui(EN, "--lingua", "en", "tic", "en-buono.md")
+        for segno in ("due punti:", "punto e virgola:", "parentesi:"):
+            self.assertNotIn(segno, out, segno)
+        self.assertNotIn("due punti:", self.tic_su("The plan has one aim: speed. " * 5 + "\n"))
+        url = "See https://example.org/a:b for the page (draft). The call is at 7:17 a.m. today and it is long enough. " * 20
+        self.assertNotIn("due punti:", self.tic_su(url + "\n"))
+
     def test_segni_del_catalogo(self):
         rc, out = esegui(EN, "--lingua", "en", "tic", "en-segni-catalogo.md")
         self.assertEqual(rc, 0)
@@ -412,6 +435,13 @@ class ItalianoSegni(unittest.TestCase):
         out = self.tic_su("L'uomo e l’anno. Disse «sì» e poi \"no\".\n")
         self.assertIn("apostrofi misti: 1 dritti e 1 ricurvi", out)
         self.assertNotIn("virgolette doppie miste", out)
+
+    def test_punteggiatura_sostitutiva_it(self):
+        out = self.tic_su("Il piano ha uno scopo: la rapidità. Il piano è breve; funziona (quasi sempre). " * 30 + "\n")
+        for segno in ("due punti: 30", "punto e virgola: 30", "parentesi: 30"):
+            self.assertIn(segno, out, segno)
+        _, out = esegui(IT, "tic", "it-origine.md")
+        self.assertNotIn("due punti:", out)
 
     def test_titolo_in_frase_non_e_title_case(self):
         out = self.tic_su("# Il registro del porto\n\n## Come funziona il registro\n\nTesto.\n")
