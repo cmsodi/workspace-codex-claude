@@ -17,14 +17,14 @@ strumenti senza mantenere copie divergenti.
 ├── PROJECT_GUIDE.md
 ├── .agents/
 │   └── skills/
-│       └── chiudi-fase/
+│       ├── chiudi-fase/
+│       └── verifica-workspace/
 ├── .claude -> .agents
 ├── input/
 ├── lavorazione/
 ├── output/
 ├── legacy/
 ├── test/
-├── strumenti/
 └── moduli-opzionali/
     └── scrittura/
 ```
@@ -45,8 +45,12 @@ Le cinque cartelle sono mantenute in Git mediante un file nascosto
 3. Compila le sezioni tra parentesi quadre in `PROJECT_GUIDE.md`.
 4. Aggiungi soltanto le skill locali realmente necessarie in
    `.agents/skills/`.
-5. Esegui `python3 strumenti/verifica_struttura.py`.
+5. Chiedi a Codex o Claude Code: «Verifica il workspace condiviso».
 6. Inizializza il repository Git quando opportuno.
+
+La richiesta di verifica attiva la skill `verifica-workspace`, che esegue
+internamente i controlli senza richiedere all'utente di lanciare Python. La
+skill non viene eseguita durante le normali attività del progetto.
 
 ## Modulo di scrittura opzionale
 

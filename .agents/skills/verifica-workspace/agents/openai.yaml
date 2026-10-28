@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verifica workspace"
+  short_description: "Controlla la configurazione Codex–Claude"
+  default_prompt: "Usa $verifica-workspace per controllare che questo workspace condiviso sia configurato correttamente."
