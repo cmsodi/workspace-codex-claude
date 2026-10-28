@@ -38,6 +38,11 @@ Riferimenti bibliografici, DOI, URL, citazioni testuali e frasi attribuite a una
 - **DOI:** aprilo come `https://doi.org/<DOI>` e confronta titolo e autori. **URL:** aprilo; se è morto, cerca un archivio.
 - **Citazione testuale:** confrontala parola per parola con la fonte aperta (identica, parafrasata, non trovata, di un altro autore).
 - **Registro:** dati diversi dal lavoro reale = «smentita», corretti con i dati verificati; riferimento introvabile = «non verificabile» con la nota «non trovato» e le ricerche fatte, in cima ai punti critici; lavoro non accessibile = «non verificabile» con la nota «non accessibile».
+- **Strumenti:** `https://api.crossref.org/works/<DOI>` dà titolo, autori, sede e anno; `https://api.crossref.org/works?query.bibliographic=<titolo+autori>&rows=3` cerca senza DOI. Crossref non copre arXiv (apri `arxiv.org/abs/<id>`), molti libri e atti (WorldCat, SBN, editore): l'assenza lì da sola non prova niente.
+- **Sede:** controlla che rivista o collana esistano e che volume, numero e pagine siano plausibili. Se la pagina non nomina la sede, titolo, autori e anno possono essere «confermata» e la sede resta «non verificata».
+- **Fonti in disaccordo** sullo stesso lavoro (anno del preprint e degli atti): prevale la fonte primaria dell'editore; l'altra va nelle note; se non si risolve, «in conflitto» per quel campo.
+- **Citazioni famose e di seconda mano:** cerca la prima occorrenza in un'edizione primaria; un'attribuzione contestata è «in conflitto» e il testo dice ciò che le fonti permettono.
+- **Il lettore di pagine riassume:** per una citazione letterale chiedi il passaggio esatto e controlla che compaia nella pagina; un riassunto non vale come confronto parola per parola.
 - **Non fare:** non cancellare né sostituire un riferimento introvabile con il «più vicino» come confermato (i candidati vanno nelle note, da confermare dall'autore); non completare DOI o URL a memoria.
 
 ## Regole di rigore

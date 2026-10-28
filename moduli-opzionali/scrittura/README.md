@@ -9,6 +9,10 @@ Il modulo aggiunge ruoli condivisi per:
 Contiene i plugin canonici, i relativi strumenti e gli entrypoint locali per
 Codex. Licenze e note legali restano nelle rispettive cartelle.
 
+I controlli di stile non sono un rilevatore di testi generati da IA: servono a chi
+scrive per rivedere il proprio testo (vedi «Limiti d'uso» nel README di ciascun
+plugin).
+
 Il modulo è inattivo nella posizione corrente. Per attivarlo, dalla radice del
 progetto su macOS, Linux o Git Bash:
 

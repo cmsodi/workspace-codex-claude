@@ -96,7 +96,7 @@ Tutti i comandi hanno la forma `python3 -I ${CLAUDE_SKILL_DIR}/../../strumenti/c
 
 1. Esegui `controlla.py --lingua en integrita` tra il testo di partenza e il tuo. Gli errori su numeri e nomi si correggono. L'avviso di **possibili omissioni** si esamina frase per frase: una frase spezzata compare qui, un'informazione sparita è un errore. Il controllo non vede un taglio di mezza frase quando le sue parole ricorrono nelle frasi vicine: l'elenco delle eliminazioni nel rapporto resta obbligatorio. Gli avvisi sulle cautele (*according to*, modali, *about*, *believed to*) si leggono uno per uno: attivando i passivi si perdono facilmente.
 2. Esegui `controlla.py --lingua en struttura` (titoli, richiami, link, commenti, note: gli elementi che non sono prosa non si toccano).
-3. Esegui `controlla.py --lingua en ritmo --registro <il tuo registro>`, `tic` e `scorrevolezza`. Leggi gli avvisi come indizi e non come verdetti. Le soglie di ritmo sono provvisorie.
+3. Esegui `controlla.py --lingua en ritmo --registro <il tuo registro>`, `tic` e `scorrevolezza`. Leggi gli avvisi come indizi e non come verdetti. Poi `controlla.py --lingua en tic-confronto ORIGINE RISULTATO`: dà le segnalazioni per famiglia prima e dopo per le misure del rapporto, e un AVVISO su una famiglia aumentata vuol dire che un tic ne ha sostituito un altro. Le soglie di ritmo sono provvisorie.
 4. Solo ora consulta la sezione 5 di `diagnosi.md` e confronta.
 5. Applica le cinque prove della sezione 2 di `diagnosi.md`.
 6. Se non puoi eseguire il programma, controlla a mano numeri, nomi, date, attribuzioni e cautele, riga per riga, e rileggi ogni frase del testo di partenza chiedendoti dove sia finita.
@@ -125,7 +125,7 @@ Conta le parole (`wc -w`). **Fino a circa 4.000 parole** lavora direttamente su 
    - **Passivi attivati:** dove hai attivato una frase, con il soggetto usato e la prova che l'agente era nel testo di partenza.
    - **Margine:** che cosa avresti toccato con un livello più alto e hai lasciato, e perché (gusto, voce dell'autore, rischio per i fatti).
    - **Scelte nei dubbi** che toccano il senso.
-   - **Misure:** ritmo, integrità e scorrevolezza, prima e dopo, con l'avvertenza che le soglie di ritmo inglesi sono provvisorie.
+   - **Misure:** ritmo, integrità, scorrevolezza e tic (`tic-confronto`), prima e dopo, con l'avvertenza che le soglie di ritmo inglesi sono provvisorie.
    - **Domande per l'autore:** fatti che mancano, attribuzioni vaghe senza fonte o punti che richiedono una decisione.
    - **Segni lasciati di proposito:** indizi di `controlla.py` che hai tenuto (citazione, nome proprio, parola in senso proprio) e perché.
    - **Che cosa non è stato verificato** (per esempio se la fase 2 è stata saltata).

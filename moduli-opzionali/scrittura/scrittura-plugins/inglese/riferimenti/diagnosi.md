@@ -128,6 +128,8 @@ Non si trasforma mai un passivo in attivo inventando l'agente.
 
 Le liste di parole sono un gusto editoriale e non un rilevatore: una parola isolata non prova niente.
 
+**Oltre al lessico.** `controlla.py tic` guarda anche la struttura: capoversi lunghi senza numeri, nomi propri o date (il testo generico, che potrebbe stare identico in un altro testo), battute finali ripetute a ogni capoverso, aperture ripetute e tre frasi di fila con lo stesso attacco, punteggiatura sostitutiva e grappoli. Sono indizi con soglie provvisorie. I tic di moda più recenti (*That said*, *Put simply*, *Think of it as*, *ranging from*, *No hype. No fluff. Just results.*, *The result?*) sono segnalati «da valutare»: la lista è un'ipotesi da confermare sui testi reali e invecchia (vedi `manutenzione.md`, che ne dà la data). `controlla.py tic-confronto ORIGINE RISULTATO` conta le segnalazioni per famiglia prima e dopo la riscrittura e avverte se una famiglia è aumentata, cioè se un tic ne ha sostituito un altro.
+
 ## 6. Errori di architettura ricorrenti
 
 Gli stessi dell'italiano. Nessun ritocco di stile li risolve.

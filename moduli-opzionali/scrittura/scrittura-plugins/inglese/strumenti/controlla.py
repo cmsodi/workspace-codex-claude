@@ -10,6 +10,7 @@ Misura e segnala: sono indizi da valutare, non verdetti.
   python3 -I controlla.py [--lingua it|en] ritmo [--registro regolare|cerniere|tecnico] FILE [FILE ...]
   python3 -I controlla.py [--lingua it|en] tic FILE [FILE ...]
   python3 -I controlla.py [--lingua it|en] scorrevolezza FILE [FILE ...]
+  python3 -I controlla.py [--lingua it|en] tic-confronto ORIGINE RISULTATO
   python3 -I controlla.py confronta FILE_ITALIANO FILE_INGLESE
 
 «confronta» mette a fronte le due versioni (italiana e inglese) dello stesso documento, sezione per sezione:
@@ -33,6 +34,10 @@ RE_NUM = re.compile(r"\d+(?:[.,]\d+)*")
 RE_PAROLA = re.compile(r"[^\W\d_][\w'’\-]*")
 
 LINGUE = ("it", "en")
+
+# Ultimo aggiornamento dei lessici di tic (TIC_IT, TIC_EN, GRAPPOLO_*). Le liste invecchiano con le generazioni di modelli:
+# la procedura per aggiornarle è in riferimenti/manutenzione.md.
+LESSICI_DATA = "2026-10-28"
 
 
 # ---------------------------------------------------------------- profili
@@ -160,6 +165,13 @@ TIC_IT = [
     ("emoji come formattazione", "[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]"),
     ("elenco con etichetta in grassetto (da valutare: se le etichette sono dati, restano)",
      r"^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}\*\*:|^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}:\*\*"),
+    ("connettivo o enfasi di moda, da valutare", r"\bdetto (?:questo|ciò),|\bin altre parole,|\ba ben vedere\b|\ba conti fatti\b|\bin fin dei conti\b|\bin sintesi,"
+                                                 r"|\bil punto è\b|\bla verità è (?:che|semplice)\b|\bnon è un caso che\b|\bad oggi\b|\bin un contesto di\b|\bin questo scenario\b"
+                                                 r"|\bla chiave (?:è|sta)\b|\bil vero (?:problema|punto|nodo)\b|\bin un mondo in cui\b"),
+    ("analogia annunciata, da valutare", r"\bpensa(?:la|lo)? come\b|\bimmagina (?:un|una|di|che)\b|\bpensa a (?:un|una)\b"),
+    ("ventaglio o coppia simmetrica, da valutare", r"\bda un lato\b[^.?!]{0,150}\bdall['’]altro\b|\bche si tratti di\b|\bun mix di\b|\buna combinazione di\b|\bdal\w* [^,.;]{2,30} al\w* e tutto ciò che sta nel mezzo\b"),
+    ("frammenti a effetto o rivelazione annunciata", r"\b(?:niente|nessun[oa]?) \w+(?: \w+)?[.,] (?:niente|nessun[oa]?) \w+(?: \w+)?[.,] (?:solo|soltanto|e basta)\b"
+                                                    r"|(?:^|[.!?]\s+)(?:il risultato|il problema|la soluzione|la verità|la risposta|il trucco)[?:]"),
 ]
 # Famiglie le cui segnalazioni, se vicine, sono la firma di un testo da LLM (vedi grappoli).
 GRAPPOLO_IT = {
@@ -264,8 +276,16 @@ TIC_EN = [
     ("emoji come formattazione", "[\U0001F300-\U0001FAFF☀-➿⭐⬆✅❌]"),
     ("elenco con etichetta in grassetto (da valutare: se le etichette sono dati, restano)",
      r"^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}\*\*:|^\s*(?:[*\-]|\d+[.)])\s+\*\*[^*\n]{1,60}:\*\*"),
+    ("connettivo o enfasi di moda, da valutare", r"\bthat said,|\bthat being said\b|\bput simply\b|\bsimply put\b|\bin other words,|\bmore importantly,|\bwhat['’]s more,"
+                                                 r"|\bnot only that\b|\bthe bottom line\b|\bthe (?:key )?takeaway\b|\bthe reality is\b|\bthe truth is\b|\bin a nutshell\b"
+                                                 r"|\bit['’]s no secret\b|\bone thing is clear\b|\bmake no mistake\b|\bplain and simple\b"),
+    ("analogia annunciata, da valutare", r"\bthink of (?:it|this|them|[a-z]+) (?:as|like)\b|\bimagine (?:a|an|if|that|you)\b|\bpicture (?:a|an|this)\b"),
+    ("ventaglio o coppia simmetrica, da valutare", r"\branging from\b|\ba blend of\b|\ba mix of\b|\bwhether you['’]re\b|\bon the one hand\b|\bfrom \w+ to \w+ and everything in between\b"
+                                                   r"|\bwhether (?:it['’]s|it is|you are)\b[^.?!]{0,80}\bor\b"),
+    ("frammenti a effetto o rivelazione annunciata", r"\bno \w+(?: \w+)?[.,] no \w+(?: \w+)?[.,] (?:just|only)\b|\bnot \w+(?: \w+)?\. not \w+(?: \w+)?\. (?:just|only)\b"
+                                                    r"|(?:^|[.!?]\s+)(?:the|here['’]s the) (?:result|catch|problem|solution|answer|truth|kicker|upshot|twist)[?:]"),
 ]
-# Famiglie le cui segnalazioni, se vicine, sono la firma di un testo da LLM (vedi grappoli_en).
+# Famiglie le cui segnalazioni, se vicine, sono la firma di un testo da LLM (vedi grappoli).
 GRAPPOLO_EN = {
     "apertura o chiusura formulaica", "annuncio di rilevanza", "meta-annuncio", "perifrasi della copula", "lessico da LLM",
     "iperbole o giudizio generico", "corporate-speak", "participio o gerundio appeso, da valutare",
@@ -778,9 +798,73 @@ def punteggiatura_di_pausa(righe):
     return out
 
 
+def concretezza(righe):
+    """Capoversi lunghi senza numeri, nomi propri o date: la forma tipica del testo generico.
+
+    Un capoverso argomentativo può esserne privo; conta la quota. Soglie PROVVISORIE."""
+    pars = [(i, p) for i, p in enumerate(paragrafi(righe), 1) if len(p.split()) >= 40]
+    if len(pars) < 4:
+        return []
+    senza = [i for i, p in pars if not numeri([p]) and not nomi([p])]
+    if len(senza) >= 3 and len(senza) / len(pars) >= 0.5:
+        elenco = ", ".join(str(i) for i in senza[:8]) + ("…" if len(senza) > 8 else "")
+        return [f"concretezza: {len(senza)} capoversi su {len(pars)} (di almeno 40 parole) senza numeri né nomi propri ({elenco}). "
+                "È la forma tipica del testo generico, che potrebbe stare identico in un altro testo (cinque prove, terza); "
+                "un capoverso argomentativo può esserne privo. Soglie provvisorie."]
+    return []
+
+
+APERTURE_NEUTRE = {
+    "en": set("the a an in on of to and but as at for with by from".split()),
+    "it": set("il lo la i gli le un uno una in di a da su per con e ma".split()),
+}
+
+
+def strutture_ripetute(righe):
+    """Chiusure a battuta, aperture ripetute e tre frasi di fila con lo stesso attacco."""
+    R = PRF["ritmo"]
+    neutre = APERTURE_NEUTRE[PRF["codice"]]
+    pars = paragrafi(righe)
+    out = []
+    validi = chiusure = 0
+    aperture = Counter()
+    n_frasi = 0
+    di_fila = []
+    for i, p in enumerate(pars, 1):
+        fr = PRF["frasi"](p)
+        n_frasi += len(fr)
+        if len(fr) >= 3:
+            validi += 1
+            n = [len(s.split()) for s in fr]
+            if n[-1] <= R["breve"] and n[-2] >= R["medio"]:
+                chiusure += 1
+        attacchi = []
+        for s in fr:
+            w = re.findall(r"[^\W\d_][\w'’\-]*", s.lower())
+            a = " ".join(w[:2]) if len(w) >= 4 and w[0] not in neutre else None
+            attacchi.append(a)
+            if a:
+                aperture[a] += 1
+        for j in range(len(attacchi) - 2):
+            if attacchi[j] and attacchi[j] == attacchi[j + 1] == attacchi[j + 2]:
+                di_fila.append((i, attacchi[j]))
+                break
+    if validi >= 4 and chiusure >= 3 and chiusure / validi >= 0.4:
+        out.append(f"chiusure a battuta: {chiusure} capoversi su {validi} finiscono con una frase breve dopo una lunga. "
+                   "Una battuta finale ripetuta a ogni capoverso è un tic; vale solo se capovolge un'attesa (diagnosi, sezione 4).")
+    for a, k in aperture.most_common(2):
+        if k >= 4 and k / max(n_frasi, 1) >= 0.1:
+            out.append(f"apertura ripetuta: {k} frasi su {n_frasi} cominciano con «{a}».")
+    for i, a in di_fila[:3]:
+        out.append(f"tre frasi di fila con lo stesso attacco («{a}») nel capoverso {i}.")
+    return out
+
+
 def aggiuntivi_comuni(righe):
     """Controlli di entrambe le lingue che non si riducono a un'espressione regolare per riga."""
     out = grappoli(righe)
+    out += concretezza(righe)
+    out += strutture_ripetute(righe)
     out += punteggiatura_di_pausa(righe)
     testo = testo_di(righe)
     parole = len(testo.split())
@@ -858,6 +942,50 @@ def cmd_tic(args):
         k = len(re.findall(PRF["connettivi"], testo_di(righe), re.IGNORECASE))
         print(f"   connettivi di rotazione: {k} in {parole} parole ({1000 * k / max(parole, 1):.1f} ogni mille)")
         print(f"   segnalazioni: {totale}. Sono indizi da leggere nel contesto, non errori certi.")
+    return 0
+
+
+def conta_tic(righe):
+    """Segnalazioni per famiglia di tic (stesse espressioni di `tic`)."""
+    c = Counter()
+    for nome, rx in PRF["tic"]:
+        for r in righe:
+            c[nome] += len(re.findall(rx, r, re.IGNORECASE))
+    return c
+
+
+def cmd_tic_confronto(args):
+    """Confronto prima/dopo dei tic: serve al rapporto della stilista (misure) e a vedere i tic sostituiti da altri."""
+    file_ = [a for a in args if not a.startswith("--")]
+    if len(file_) != 2:
+        return uso()
+    o, r = leggi_righe(file_[0]), leggi_righe(file_[1])
+    po, pr = len(testo_di(o).split()), len(testo_di(r).split())
+    co, cr = conta_tic(o), conta_tic(r)
+    aggiuntivi = tic_aggiuntivi_en if PRF is PROFILI["en"] else tic_aggiuntivi_it
+    ao, ar = aggiuntivi(o), aggiuntivi(r)
+    print(f"Origine:   {file_[0]} ({po} parole)")
+    print(f"Risultato: {file_[1]} ({pr} parole)")
+    print(f"(lessici dei tic aggiornati al {LESSICI_DATA}; sono indizi, non verdetti)\n")
+    print(f"   {'famiglia':<62} {'prima':>5} {'dopo':>5}   ogni mille")
+    for nome in sorted(set(co) | set(cr), key=lambda n: (-co[n], n)):
+        a, b = co[nome], cr[nome]
+        if a or b:
+            print(f"   {nome[:62]:<62} {a:>5} {b:>5}   {1000 * a / max(po, 1):.1f} → {1000 * b / max(pr, 1):.1f}")
+    k_o = len(re.findall(PRF["connettivi"], testo_di(o), re.IGNORECASE))
+    k_r = len(re.findall(PRF["connettivi"], testo_di(r), re.IGNORECASE))
+    print(f"   {'connettivi di rotazione':<62} {k_o:>5} {k_r:>5}   {1000 * k_o / max(po, 1):.1f} → {1000 * k_r / max(pr, 1):.1f}")
+    g_o, g_r = sum(1 for m in ao if m.startswith("grappolo")), sum(1 for m in ar if m.startswith("grappolo"))
+    print(f"   {'capoversi a grappolo':<62} {g_o:>5} {g_r:>5}")
+    print(f"   {'controlli aggiuntivi (coerenza, punteggiatura, struttura)':<62} {len(ao) - g_o:>5} {len(ar) - g_r:>5}")
+    tot_o, tot_r = sum(co.values()) + len(ao), sum(cr.values()) + len(ar)
+    print(f"\nSegnalazioni in totale: {tot_o} → {tot_r}")
+    aumentate = [n for n in cr if cr[n] > co[n]]
+    if aumentate:
+        print("AVVISO famiglie aumentate (un tic sostituito da un altro?): " + "; ".join(f"{n} {co[n]}→{cr[n]}" for n in aumentate))
+    nuovi = sorted({m.split(":")[0] for m in ar} - {m.split(":")[0] for m in ao})
+    if nuovi:
+        print("AVVISO controlli aggiuntivi comparsi nel risultato: " + "; ".join(nuovi))
     return 0
 
 
@@ -1087,7 +1215,7 @@ def main():
     imposta_lingua(codice)
     cmd, args = argv[0], argv[1:]
     comandi = {"integrita": cmd_integrita, "struttura": cmd_struttura, "ritmo": cmd_ritmo,
-               "tic": cmd_tic, "scorrevolezza": cmd_scorrevolezza, "confronta": cmd_confronta}
+               "tic": cmd_tic, "tic-confronto": cmd_tic_confronto, "scorrevolezza": cmd_scorrevolezza, "confronta": cmd_confronta}
     if cmd not in comandi:
         return uso()
     return comandi[cmd](args)

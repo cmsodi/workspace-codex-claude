@@ -58,6 +58,7 @@ Per i testi lunghi lo stilista lavora a pezzi con l'agente `inglese:stilista`, c
 - `riferimenti/convenzioni-us.md`: ortografia, punteggiatura, numeri, date e titoli in americano.
 - `riferimenti/diagnosi.md`: modello di buona prosa, ritmo (provvisorio), tic degli LLM e degli autori umani (con le famiglie del repertorio dei segni di scrittura automatica), calchi dall'italiano, passivi, intoppi di lettura e, alla sezione 11, ciò che non è un segno.
 - `riferimenti/NOTE-LEGALI.md`: origine dei materiali e licenze.
+- `riferimenti/manutenzione.md`: data dei lessici di tic, quando rivederli e come aggiungerne o toglierne uno.
 - `strumenti/controlla.py`: controlli di integrità (con ricerca di omissioni), struttura, ritmo, tic e scorrevolezza. Solo libreria standard di Python. Si usa sempre con `--lingua en`. È la stessa identica copia del plugin `italiano` (un'unica fonte con due profili di lingua).
 - `strumenti/verifica_integrita.py`: controllo riga per riga dei pezzi (dal plugin `revisione`).
 - `strumenti/verifica_allineamento.py`: controllo che due file (italiano e inglese) abbiano la stessa struttura (dal plugin `revisione`).
@@ -67,6 +68,10 @@ Per i testi lunghi lo stilista lavora a pezzi con l'agente `inglese:stilista`, c
 Questo plugin e `italiano` raccolgono e sostituiscono `revisione` (skill `rivedi`, `rivedi-bilingue`, agente `doc-reviewer`): la revisione dello stile di testi inglesi, il controllo degli italianismi e il flusso a pezzi con approvazione sono nello stilista; il confronto di due versioni è in `/inglese:confronto`.
 
 ---
+
+## Limiti d'uso
+
+Il plugin migliora uno stile e controlla i fatti: non è un rilevatore di testi generati da IA e non dimostra chi ha scritto un testo. Gli indizi di `controlla.py` sono segnali di stile con soglie in parte provvisorie. Molti (frasi ovvie, triadi, connettivi, pile di nomi, calchi dalla prima lingua) compaiono anche nella prosa di autori umani, in particolare di chi scrive in una seconda lingua o in registri burocratici e accademici. Non vanno usati per attribuire un testo a una macchina né per giudicare una persona: servono a chi scrive per rivedere il proprio testo. Il plugin non cerca di eludere i rilevatori.
 
 ## Note
 

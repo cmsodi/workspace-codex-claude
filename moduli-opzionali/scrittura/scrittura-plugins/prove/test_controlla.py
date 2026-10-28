@@ -385,6 +385,132 @@ class InglesTic(unittest.TestCase):
         self.assertIn("[en] grassetto: 7 passaggi", out)
 
 
+def tic_su_testo(testo, lingua):
+    t = file_temporaneo(testo)
+    try:
+        _, out = esegui(EN, "--lingua", lingua, "tic", t)
+    finally:
+        os.unlink(t)
+    return out
+
+
+class StruttureEConcretezza(unittest.TestCase):
+    GENERICO = ("the team keeps working toward its shared aims and the whole group learns from each other while adjusting habits as needed "
+                "in every season so progress stays steady and careful over time and people feel supported by clear goals and simple routines "
+                "that fit their needs well.\n\n")
+
+    def test_capoversi_generici_senza_ancoraggi(self):
+        out = tic_su_testo(self.GENERICO * 5, "en")
+        self.assertIn("concretezza: 5 capoversi su 5", out)
+
+    def test_capoversi_con_numeri_e_nomi_non_sono_segnalati(self):
+        con = self.GENERICO.replace("the team", "the Rossi team").replace("every season", "all 4 seasons")
+        self.assertNotIn("concretezza", tic_su_testo(con * 5, "en"))
+
+    def test_pochi_capoversi_lunghi_non_si_misurano(self):
+        self.assertNotIn("concretezza", tic_su_testo(self.GENERICO * 3, "en"))
+
+    def test_chiusure_a_battuta(self):
+        p = ("The ledger lists every berth in the harbor and every ferry that docks there during the busy summer season of the year. "
+             "The auditor compared each line with the bank statements and found the totals consistent across every single account. "
+             "Nothing was missing.\n\n")
+        self.assertIn("chiusure a battuta: 5 capoversi su 5", tic_su_testo(p * 5, "en"))
+
+    def test_apertura_ripetuta_e_tre_di_fila(self):
+        p = "Our team checks the files. Our team writes the notes carefully today. Our team sends the report to everyone.\n\n"
+        out = tic_su_testo(p * 2, "en")
+        self.assertIn("apertura ripetuta: 6 frasi su 6 cominciano con «our team»", out)
+        self.assertIn("tre frasi di fila con lo stesso attacco («our team») nel capoverso 1", out)
+
+    def test_articoli_non_contano_come_apertura_ripetuta(self):
+        p = "The ledger lists the berths. The auditor checks the totals today. The board accepts the report in March.\n\n"
+        self.assertNotIn("apertura ripetuta", tic_su_testo(p * 3, "en"))
+
+    def test_italiano_generico_e_aperture(self):
+        g = ("la squadra continua a lavorare verso obiettivi condivisi e il gruppo impara dagli altri mentre adatta le abitudini quando serve "
+             "in ogni stagione cosicché il progresso resta costante e attento nel tempo e le persone si sentono sostenute da obiettivi chiari "
+             "e da routine semplici che si adattano bene alle loro esigenze.\n\n")
+        self.assertIn("concretezza: 5 capoversi su 5", tic_su_testo(g * 5, "it"))
+        p = "Il gruppo controlla i file. Il gruppo scrive le note con cura. Il gruppo invia la relazione a tutti.\n\n"
+        self.assertNotIn("apertura ripetuta", tic_su_testo(p * 3, "it"))
+        p = "Questo gruppo controlla i file. Questo gruppo scrive le note con cura. Questo gruppo invia la relazione a tutti.\n\n"
+        self.assertIn("tre frasi di fila", tic_su_testo(p, "it"))
+
+
+class TicDiModa(unittest.TestCase):
+    def test_inglese(self):
+        t = ("That said, the plan holds. Think of it as a map. Costs vary, ranging from low to high. No hype. No fluff. Just results. "
+             "The result? Chaos.\n")
+        out = tic_su_testo(t, "en")
+        for etichetta in ("connettivo o enfasi di moda", "analogia annunciata", "ventaglio o coppia simmetrica", "frammenti a effetto"):
+            self.assertIn(etichetta, out, etichetta)
+
+    def test_italiano(self):
+        t = ("Detto questo, il piano regge. Pensala come una mappa. Da un lato i costi salgono, dall'altro i ricavi crescono. "
+             "Niente fronzoli. Niente slogan. Solo risultati. Il risultato? Caos. Ad oggi non è chiaro.\n")
+        out = tic_su_testo(t, "it")
+        for etichetta in ("connettivo o enfasi di moda", "analogia annunciata", "ventaglio o coppia simmetrica", "frammenti a effetto"):
+            self.assertIn(etichetta, out, etichetta)
+
+    def test_testi_puliti_non_li_attivano(self):
+        for f, lingua in (("en-buono.md", "en"), ("en-non-segni.md", "en"), ("it-non-segni.md", "it"), ("it-origine.md", "it")):
+            _, out = esegui(EN, "--lingua", lingua, "tic", f)
+            for etichetta in ("enfasi di moda", "analogia annunciata", "ventaglio", "frammenti a effetto"):
+                self.assertNotIn(etichetta, out, f"{f}: {etichetta}")
+
+
+class Valutazione(unittest.TestCase):
+    """Insieme di prova: testi sporchi, riscritture attese, testi puliti. Controlla efficacia e falsi positivi."""
+    COPPIE = (("en", "en-sporco.md", "en-riscritto.md"), ("it", "it-sporco.md", "it-riscritto.md"))
+    # (lingua, file, massimo di segnalazioni): un testo pulito che supera il massimo è un falso positivo nuovo.
+    PULITI = (("en", "en-buono.md", 1), ("en", "en-non-segni.md", 2), ("en", "en-riscritto.md", 0),
+              ("it", "it-origine.md", 2), ("it", "it-non-segni.md", 1), ("it", "it-riscritto.md", 0))
+
+    def segnalazioni(self, lingua, f):
+        _, out = esegui(EN, "--lingua", lingua, "tic", f)
+        return int(out.split("segnalazioni: ")[1].split(".")[0]), out
+
+    def test_lo_sporco_ha_grappoli_e_la_riscrittura_no(self):
+        for lingua, sporco, riscritto in self.COPPIE:
+            k_s, out_s = self.segnalazioni(lingua, sporco)
+            k_r, out_r = self.segnalazioni(lingua, riscritto)
+            self.assertIn("grappolo", out_s, sporco)
+            self.assertNotIn("grappolo", out_r, riscritto)
+            self.assertGreaterEqual(k_s, 8, sporco)
+            self.assertEqual(k_r, 0, riscritto)
+
+    def test_la_riscrittura_conserva_numeri_e_nomi(self):
+        for lingua, sporco, riscritto in self.COPPIE:
+            rc, out = esegui(EN, "--lingua", lingua, "integrita", sporco, riscritto)
+            self.assertEqual(rc, 0, out)
+            self.assertIn("Numeri e nomi coincidono.", out)
+
+    def test_confronto_prima_dopo(self):
+        for lingua, sporco, riscritto in self.COPPIE:
+            rc, out = esegui(EN, "--lingua", lingua, "tic-confronto", sporco, riscritto)
+            self.assertEqual(rc, 0)
+            self.assertIn("lessici dei tic aggiornati al", out)
+            self.assertNotIn("AVVISO", out)
+            tot = out.split("Segnalazioni in totale: ")[1].split()
+            self.assertGreater(int(tot[0]), int(tot[2]))
+            self.assertEqual(tot[2], "0")
+
+    def test_confronto_all_indietro_segnala_i_tic_aumentati(self):
+        for lingua, sporco, riscritto in self.COPPIE:
+            _, out = esegui(EN, "--lingua", lingua, "tic-confronto", riscritto, sporco)
+            self.assertIn("AVVISO famiglie aumentate", out)
+
+    def test_il_confronto_vuole_due_file(self):
+        rc, _ = esegui(EN, "--lingua", "en", "tic-confronto", "en-sporco.md")
+        self.assertEqual(rc, 2)
+
+    def test_i_testi_puliti_non_superano_il_massimo(self):
+        for lingua, f, massimo in self.PULITI:
+            k, out = self.segnalazioni(lingua, f)
+            self.assertLessEqual(k, massimo, f"{f}: {k} segnalazioni\n{out}")
+            self.assertNotIn("grappolo", out, f)
+
+
 class ItalianoSegni(unittest.TestCase):
     """Parità italiana con i segni del catalogo: famiglie, grappoli, non-segni, coerenza."""
 

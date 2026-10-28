@@ -38,6 +38,7 @@ Per i testi lunghi lo stilista lavora a pezzi con l'agente `italiano:stilista`, 
 - `skills/`: le tre skill.
 - `agents/`: `verificatore` (ricerca in rete, contesto isolato) e `stilista` (lavoro a pezzi sui documenti lunghi).
 - `riferimenti/contratto.md`: file di scambio, registro delle affermazioni, regole sui fatti, note e fonti.
+- `riferimenti/manutenzione.md`: data dei lessici di tic, quando rivederli e come aggiungerne o toglierne uno.
 - `riferimenti/diagnosi.md`: modello di buona prosa, ritmo, intoppi di lettura, tic degli LLM (con le famiglie del repertorio dei segni di scrittura automatica) e degli autori umani, calchi dall'inglese, preferenze di stile dell'utente e, alla sezione 11, ciò che non è un segno.
 - `riferimenti/grammatica-italiana.md`: guida di grammatica normativa (materiale di terzi, vedi `riferimenti/NOTE-LEGALI.md`).
 - `strumenti/controlla.py`: controlli di integrità (con ricerca di omissioni), struttura, ritmo, tic e scorrevolezza. Solo libreria standard di Python. Ha due profili di lingua (`--lingua it|en`); senza l'opzione vale `it`, e le skill di questo plugin lo usano così. È la stessa identica copia del plugin `inglese`.
@@ -48,6 +49,10 @@ Per i testi lunghi lo stilista lavora a pezzi con l'agente `italiano:stilista`, 
 Questo plugin raccoglie e sostituisce `revisione` (skill `rivedi` e `rivedi-bilingue`, agente `doc-reviewer`) per la parte italiana: ne riprende il flusso a pezzi con approvazione, il controllo d'integrità e i criteri contro i calchi. La parte in inglese americano e il confronto fra le due versioni di un documento sono nel plugin gemello `inglese` (`/inglese:stilista`, `/inglese:confronto`).
 
 ---
+
+## Limiti d'uso
+
+Il plugin migliora uno stile e controlla i fatti: non è un rilevatore di testi generati da IA e non dimostra chi ha scritto un testo. Gli indizi di `controlla.py` sono segnali di stile con soglie in parte provvisorie. Molti (frasi ovvie, triadi, connettivi, pile di nomi, calchi dalla prima lingua) compaiono anche nella prosa di autori umani, in particolare di chi scrive in una seconda lingua o in registri burocratici e accademici. Non vanno usati per attribuire un testo a una macchina né per giudicare una persona: servono a chi scrive per rivedere il proprio testo. Il plugin non cerca di eludere i rilevatori.
 
 ## Note
 

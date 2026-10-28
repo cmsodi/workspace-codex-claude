@@ -125,6 +125,8 @@ Da consultare dopo la prima stesura. Una voce isolata è una svista, più voci v
 
 Le liste di parole sono un gusto editoriale e non un rilevatore: una parola isolata non prova niente.
 
+**Oltre al lessico.** `controlla.py tic` guarda anche la struttura: capoversi lunghi senza numeri, nomi propri o date (il testo generico, che potrebbe stare identico in un altro testo), battute finali ripetute a ogni capoverso, aperture ripetute e tre frasi di fila con lo stesso attacco, punteggiatura sostitutiva e grappoli. Sono indizi con soglie provvisorie. I tic di moda più recenti («Detto questo», «Il punto è», «Pensala come», «da un lato… dall'altro», «Niente fronzoli. Niente slogan. Solo risultati.», «Il risultato?») sono segnalati «da valutare»: la lista è un'ipotesi da confermare sui testi reali e invecchia (vedi `manutenzione.md`, che ne dà la data). `controlla.py tic-confronto ORIGINE RISULTATO` conta le segnalazioni per famiglia prima e dopo la riscrittura e avverte se una famiglia è aumentata, cioè se un tic ne ha sostituito un altro.
+
 ## 6. Errori di architettura ricorrenti
 
 Visti nella prova su Tunguska. Nessun ritocco di stile li risolve.

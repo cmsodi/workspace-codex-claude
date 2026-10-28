@@ -102,7 +102,7 @@ Tutti i comandi hanno la forma `python3 -I ${CLAUDE_SKILL_DIR}/../../strumenti/c
 
 1. Esegui `controlla.py integrita` tra il testo di partenza e il tuo. Gli errori su numeri e nomi si correggono. L'avviso di **possibili omissioni** si esamina frase per frase: una frase spezzata compare qui, un'informazione sparita è un errore. Il controllo non vede un taglio di mezza frase quando le sue parole ricorrono nelle frasi vicine: l'elenco delle eliminazioni nel rapporto resta obbligatorio.
 2. Esegui `controlla.py struttura` (titoli, richiami, link, commenti, note: gli elementi che non sono prosa non si toccano).
-3. Esegui `controlla.py ritmo --registro <il tuo registro>`, `tic` e `scorrevolezza`. Leggi gli avvisi come indizi e non come verdetti.
+3. Esegui `controlla.py ritmo --registro <il tuo registro>`, `tic` e `scorrevolezza`. Leggi gli avvisi come indizi e non come verdetti. Poi `controlla.py tic-confronto ORIGINE RISULTATO`: dà le segnalazioni per famiglia prima e dopo per le misure del rapporto, e un AVVISO su una famiglia aumentata vuol dire che un tic ne ha sostituito un altro.
 4. Leggi il testo di seguito come un lettore: ogni passaggio fra due frasi ha un nesso, o è una continuazione ovvia? Cerca le file di frasi accostate (anche di media lunghezza), i due punti e i punti e virgola che sottintendono un rapporto, le conclusioni dette prima delle ragioni. Ripeti la prova di sottrazione sulle aperture e chiusure dei capoversi, sulle frasi molto brevi, sugli incisi e sulle subordinate introduttive: sono i punti in cui più facilmente sopravvivono etichette e cornici senza contenuto. I controlli di `controlla.py` non vedono questi difetti: contano le frasi brevi e i tic, non i legami né l'utilità di una frase.
 5. Solo ora consulta la sezione 5 di `diagnosi.md` e confronta.
 6. Applica le cinque prove della sezione 2 di `diagnosi.md`.
@@ -133,7 +133,7 @@ Conta le parole (`wc -w`). **Fino a circa 4.000 parole** lavora direttamente su 
    - **Nessi aggiunti:** ogni nesso che hai scritto per rendere esplicito un rapporto sottinteso, con la lettura che implica, così l'autore lo conferma o lo toglie.
    - **Margine:** che cosa avresti toccato con un livello più alto e hai lasciato, e perché (gusto, voce dell'autore, rischio per i fatti).
    - **Scelte nei dubbi** che toccano il senso.
-   - **Misure:** ritmo, integrità e scorrevolezza, prima e dopo.
+   - **Misure:** ritmo, integrità, scorrevolezza e tic (`tic-confronto`), prima e dopo.
    - **Domande per l'autore:** fatti che mancano, attribuzioni vaghe senza fonte o punti che richiedono una decisione.
    - **Segni lasciati di proposito:** indizi di `controlla.py` che hai tenuto (citazione, nome proprio, parola in senso proprio) e perché.
    - **Che cosa non è stato verificato** (per esempio se la fase 2 è stata saltata).
