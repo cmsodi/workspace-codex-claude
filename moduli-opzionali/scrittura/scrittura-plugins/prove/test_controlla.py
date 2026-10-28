@@ -426,6 +426,37 @@ class StruttureEConcretezza(unittest.TestCase):
         p = "The ledger lists the berths. The auditor checks the totals today. The board accepts the report in March.\n\n"
         self.assertNotIn("apertura ripetuta", tic_su_testo(p * 3, "en"))
 
+    SECCA = ("Il limite è chiaro. Il caso mostra che la distinzione fra accesso e controllo richiede una descrizione separata per ogni funzione "
+             "del sistema e non una valutazione unica. Un terzo periodo chiude qui il discorso.\n\n")
+
+    def test_aperture_secche(self):
+        out = tic_su_testo(self.SECCA * 6, "it")
+        self.assertIn("aperture secche: 6 capoversi su 6", out)
+
+    def test_aperture_secche_con_marcatore_di_spiegazione(self):
+        p = ("La regola è semplice e vale per tutti i casi. Infatti la distinzione fra accesso e controllo non cambia. Un terzo periodo chiude qui.\n\n")
+        self.assertIn("aperture secche: 6 capoversi su 6", tic_su_testo(p * 6, "it"))
+
+    def test_aperture_lunghe_non_sono_secche(self):
+        p = ("Il caso mostra che la distinzione fra accesso e controllo richiede una descrizione separata per ogni funzione del sistema. "
+             "Essa non cambia con la scala. Un terzo periodo chiude qui il discorso.\n\n")
+        self.assertNotIn("aperture secche", tic_su_testo(p * 6, "it"))
+
+    def test_poche_aperture_secche_non_si_segnalano(self):
+        lunga = ("Il caso mostra che la distinzione fra accesso e controllo richiede una descrizione separata per ogni funzione del sistema. "
+                 "Essa non cambia con la scala. Un terzo periodo chiude qui il discorso.\n\n")
+        self.assertNotIn("aperture secche", tic_su_testo(self.SECCA * 2 + lunga * 6, "it"))
+
+    def test_capoversi_di_lunghezza_costante(self):
+        p = " ".join(["parola"] * 40).capitalize() + ".\n\n"
+        out = tic_su_testo(p * 9, "it")
+        self.assertIn("capoversi di lunghezza quasi costante: 9 capoversi, mediana 40 parole, 100%", out)
+
+    def test_capoversi_di_lunghezza_varia_non_si_segnalano(self):
+        lung = (31, 140, 45, 90, 33, 120, 60, 150, 38, 100)
+        t = "".join(" ".join(["parola"] * n).capitalize() + ".\n\n" for n in lung)
+        self.assertNotIn("lunghezza quasi costante", tic_su_testo(t, "it"))
+
     def test_italiano_generico_e_aperture(self):
         g = ("la squadra continua a lavorare verso obiettivi condivisi e il gruppo impara dagli altri mentre adatta le abitudini quando serve "
              "in ogni stagione cosicché il progresso resta costante e attento nel tempo e le persone si sentono sostenute da obiettivi chiari "

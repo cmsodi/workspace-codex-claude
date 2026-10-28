@@ -860,9 +860,63 @@ def strutture_ripetute(righe):
     return out
 
 
+APERTURA_SPIEGAZIONE = {
+    "it": r"^(?:Cioè|Infatti|Ovvero|In altre parole|Significa|Vuol dire|Questo (?:significa|vuol dire)|Ciò (?:significa|vuol dire)|La ragione è|Il motivo è)\b",
+    "en": r"^(?:That is|In other words|This means|Put simply|Simply put|The reason is)\b",
+}
+
+
+def aperture_secche(righe):
+    """Capoversi che cominciano con una frase breve e netta, spiegata da quelle che seguono («to lecture»).
+
+    La prima frase è breve (al più il doppio della soglia di frase breve) e la seconda è molto più lunga, oppure è
+    introdotta da un marcatore di spiegazione. Soglie PROVVISORIE."""
+    limite = 2 * PRF["ritmo"]["breve"]
+    n_par = 0
+    secche = []
+    for i, p in enumerate(paragrafi(righe), 1):
+        fr = PRF["frasi"](p)
+        if len(fr) < 3:
+            continue
+        n_par += 1
+        a, b = len(fr[0].split()), len(fr[1].split())
+        spiega = re.match(APERTURA_SPIEGAZIONE[PRF["codice"]], fr[1].lstrip("*_ "))
+        if (a <= limite and b >= 1.8 * a) or (a <= limite + 3 and spiega):
+            secche.append(i)
+    if n_par >= 6 and len(secche) >= 4 and len(secche) / n_par >= 0.25:
+        elenco = ", ".join(str(i) for i in secche[:8]) + ("…" if len(secche) > 8 else "")
+        return [f"aperture secche: {len(secche)} capoversi su {n_par} cominciano con una frase breve che la frase seguente spiega ({elenco}). "
+                "Prova del contrario: se togliendola non si perde niente, si toglie; altrimenti la conclusione va dopo le ragioni (diagnosi, sezione 5). Soglie provvisorie."]
+    return []
+
+
+def capoversi_costanti(righe):
+    """Capoversi di lunghezza quasi costante, che danno un ritmo a blocchi uguali.
+
+    Si misurano i capoversi di almeno 30 parole: se almeno il 60% sta entro il 25% della mediana, oppure cinque di fila.
+    Soglie PROVVISORIE."""
+    valori = [len(p.split()) for p in paragrafi(righe) if len(p.split()) >= 30]
+    if len(valori) < 8:
+        return []
+    med = st.median(valori)
+    entro = [abs(n - med) <= 0.25 * med for n in valori]
+    run = best = 0
+    for e in entro:
+        run = run + 1 if e else 0
+        best = max(best, run)
+    quota = sum(entro) / len(valori)
+    if quota >= 0.6 or best >= 5:
+        cv = st.pstdev(valori) / st.mean(valori)
+        return [f"capoversi di lunghezza quasi costante: {len(valori)} capoversi, mediana {med:.0f} parole, {100 * quota:.0f}% entro il 25% della mediana, "
+                f"al più {best} di fila (coefficiente di variazione {cv:.2f}). Si spezza o si fonde dove il ragionamento lo chiede (diagnosi, sezione 9). Soglie provvisorie."]
+    return []
+
+
 def aggiuntivi_comuni(righe):
     """Controlli di entrambe le lingue che non si riducono a un'espressione regolare per riga."""
     out = grappoli(righe)
+    out += aperture_secche(righe)
+    out += capoversi_costanti(righe)
     out += concretezza(righe)
     out += strutture_ripetute(righe)
     out += punteggiatura_di_pausa(righe)

@@ -28,7 +28,7 @@ Un falso positivo che si ripete su testi puliti si risolve restringendo l'espres
 
 ## Soglie provvisorie
 
-Non sono mai state calibrate su campioni di autori reali: ritmo in inglese (`PROFILI["en"]["ritmo"]`), densità di punteggiatura (`punteggiatura_di_pausa`), quota di capoversi senza ancoraggi (`concretezza`), chiusure a battuta, aperture ripetute e grassetto sparso. Vanno lette come «guarda meglio qui». Quando arriveranno i campioni, si misurano e si scrive qui il risultato.
+Non sono mai state calibrate su campioni di autori reali: ritmo in inglese (`PROFILI["en"]["ritmo"]`), densità di punteggiatura (`punteggiatura_di_pausa`), quota di capoversi senza ancoraggi (`concretezza`), chiusure a battuta, aperture ripetute, aperture secche, capoversi di lunghezza quasi costante e grassetto sparso. Vanno lette come «guarda meglio qui». Quando arriveranno i campioni, si misurano e si scrive qui il risultato.
 
 ## Che cosa non è
 
